@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>区块链&amp;BTC 初探 | 魔法使いの秘密基地</title><meta name="keywords" content="数据结构"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="密码学原理hash哈希碰撞给定x和y，且有x!&#x3D;y，但给定一个哈希函数Hash(),可以得到Hash(x)&#x3D;Hash(y)，则称为hash碰撞。实际应用中，哈希碰撞基本上难以避免，目前并不存在一个hash函数可以从数学上证明具有collision resistance的性质。 hiding我们认为，给定x和Hash(),可以很容易得到Hash(x),但没有办法在已知Hash(x)和Hash()的情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链&amp;BTC 初探">
+<meta property="og:url" content="http://example.com/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="密码学原理hash哈希碰撞给定x和y，且有x!&#x3D;y，但给定一个哈希函数Hash(),可以得到Hash(x)&#x3D;Hash(y)，则称为hash碰撞。实际应用中，哈希碰撞基本上难以避免，目前并不存在一个hash函数可以从数学上证明具有collision resistance的性质。 hiding我们认为，给定x和Hash(),可以很容易得到Hash(x),但没有办法在已知Hash(x)和Hash()的情">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/63FB52CA-38C1-4392-802C-4CE310FDFBB1_1_105_c.jpeg">
+<meta property="article:published_time" content="2022-08-25T09:56:11.000Z">
+<meta property="article:modified_time" content="2022-09-29T07:52:54.496Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/63FB52CA-38C1-4392-802C-4CE310FDFBB1_1_105_c.jpeg"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '区块链&BTC 初探',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-29 15:52:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tva1.sinaimg.cn/large/008i3skNly1gwvc7l0xf5j30b40b4weq.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/63FB52CA-38C1-4392-802C-4CE310FDFBB1_1_105_c.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">区块链&amp;BTC 初探</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-25T09:56:11.000Z" title="发表于 2022-08-25 17:56:11">2022-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-29T07:52:54.496Z" title="更新于 2022-09-29 15:52:54">2022-09-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="区块链&amp;BTC 初探"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="密码学原理"><a href="#密码学原理" class="headerlink" title="密码学原理"></a>密码学原理</h1><h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><h3 id="哈希碰撞"><a href="#哈希碰撞" class="headerlink" title="哈希碰撞"></a>哈希碰撞</h3><p>给定x和y，且有x!=y，但给定一个哈希函数Hash(),可以得到Hash(x)=Hash(y)，则称为hash碰撞。实际应用中，哈希碰撞基本上难以避免，目前并不存在一个hash函数可以从数学上证明具有collision resistance的性质。</p>
+<h3 id="hiding"><a href="#hiding" class="headerlink" title="hiding"></a>hiding</h3><p>我们认为，给定x和Hash(),可以很容易得到Hash(x),但没有办法在已知Hash(x)和Hash()的情况下，反推出x的具体取值。</p>
+<h3 id="Puzzle-friendly"><a href="#Puzzle-friendly" class="headerlink" title="Puzzle friendly"></a>Puzzle friendly</h3><p>该性质要求哈希值计算事先不可预测，仅仅根据输入很难预测出输出。例如：我们需要一个哈希值，存在于某一个范围内，只能通过不停运算查找出来。该性质保证了比特币系统中，只能通过“挖矿”获得比特币。</p>
+<h2 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h2><h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p>假设A要给B发一条信息，A是发送者，B是接收者，窃听者C可以窃听他们之间的通讯内容。</p>
+<p>B生成一个包含公钥和私钥的密钥对，私钥由B自行妥善保管，公钥发送给A，B的公钥被C截获也没关系。<br>将公钥发给A，表示B请A用这个公钥对消息进行加密并发送给他。A将密文发送给B，密文被C截获也没关系，C可能拥有B的公钥，但是B的公钥是无法进行解密的。</p>
+<p>即：用对方的公钥加密，发给对方，用私钥解密。</p>
+<h3 id="比特币中账户管理"><a href="#比特币中账户管理" class="headerlink" title="比特币中账户管理"></a>比特币中账户管理</h3><p>去中心化的比特币系统中，很明显不能进行“申请账户”。在比特币系统中，申请账户是用户自己来处理的，即自己创建一个公钥-私钥对。</p>
+<p>在比特币网络中进行转账时，通过“签名”可以明确是由哪个账户转出的，从而防止不良分子对其他账户比特币的盗取。<br>在发布交易时，通过自己<strong>私钥签名</strong>，其他人可以根据<strong>公钥进行验证</strong>，从而保证该交易由自己发起。也就是说，只有拥有私钥，才能将该账户中的比特币转走。</p>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="Hash-pointer（哈希指针）"><a href="#Hash-pointer（哈希指针）" class="headerlink" title="Hash pointer（哈希指针）"></a>Hash pointer（哈希指针）</h2><p>Hash pointer的值与节点中内容有关。当节点（区块）中内容发生改变，该哈希值也会发生改变，从而保证了区块内容不能被篡改。</p>
+<h2 id="Markle-Tree-默克尔树"><a href="#Markle-Tree-默克尔树" class="headerlink" title="Markle Tree(默克尔树)"></a>Markle Tree(默克尔树)</h2><p><img src="https://s1.imagehub.cc/images/2022/06/30/20200214173821396.png" alt=""></p>
+<p>该数据结构的优点在于：只需要记住Root Hash（根哈希值），便可以检测出对树中任何部位的修改。</p>
+<h3 id="实际用途"><a href="#实际用途" class="headerlink" title="实际用途"></a>实际用途</h3><p>Markle Tree可以用于提供Markle Proof。关于Markle proof，需要先了解比特币系统中节点。比特币中节点分为<strong>轻节点</strong>和<strong>全节点</strong>。全节点保存整个区块的所有内容，而轻节点仅仅保存区块的块头信息。</p>
+<p>当需要向轻节点证明某条交易是否被写入区块链，便需要用到Markle proof。我们将交易到根节点这一条路径称为Markle proof，全节点将整个Markle proof发送给轻节点（如下图所示），轻节点即可根据其算出根哈希值，和自己保存的对比，从而验证该交易是否被写入区块链。只要沿着该路径，所有哈希值都正确，说明内容没有被修改过。<br><img src="https://s1.imagehub.cc/images/2022/06/30/20200214173621967.png" alt=""></p>
+<h1 id="共识协议"><a href="#共识协议" class="headerlink" title="共识协议"></a>共识协议</h1><h2 id="去中心化需要解决的问题"><a href="#去中心化需要解决的问题" class="headerlink" title="去中心化需要解决的问题"></a>去中心化需要解决的问题</h2><ul>
+<li><p>数字货币的发行由谁执行？如何发行？发行多少？什么时候发行？</p>
+<p>在比特币系统中由挖矿来决定货币发行权和发行量。</p>
+</li>
+<li><p>如何验证交易是否有效？如何防止双花攻击？</p>
+<p>该问题的解决，依赖于系统中维护的一个数据结构，记录货币的使用情况（是否被花过？被谁花过？）。该数据结构由系统中全体用户共同维护，保证了交易的有效性。该数据结构，便是区块链。</p>
+</li>
+</ul>
+<h3 id="双花攻击"><a href="#双花攻击" class="headerlink" title="双花攻击"></a>双花攻击</h3><p>数字货币本身为带有签名的数据文件，可以进行复制。即：对用户来说，可以将同一货币花费两次。</p>
+<h2 id="分布式共识"><a href="#分布式共识" class="headerlink" title="分布式共识"></a>分布式共识</h2><blockquote>
+<p>可否各个节点独立完成区块链构建？<br>很明显不行，各个节点独立打包交易，形成区块链，必然无法避免区块链内容不一致。从分布式系统角度来说，<strong>账本内容需要取得分布式共识</strong>，从而保证区块链内容在不同节点上的一致性。</p>
+</blockquote>
+<h3 id="CAP-Theorem"><a href="#CAP-Theorem" class="headerlink" title="CAP Theorem"></a>CAP Theorem</h3><p>根据FLP不可能结论，在一个异步系统中，网络时延无上限，即使只有一个成员是有问题的，也不可能达成共识。</p>
+<p>Consistency一致性、Availability可靠性、Partition tolerance容错性，任何一个分布式系统中，最多只能满足其中两个性质（指满足表示两个之后再考虑第三个）。</p>
+<h3 id="比特币共识协议"><a href="#比特币共识协议" class="headerlink" title="比特币共识协议"></a>比特币共识协议</h3><p>背景：假设系统中存在部分节点有恶意，但存在比例较小。大多数节点为“好”的节点，在这种情况下进行共识协议设置。</p>
+<p>投票，但并非简单的根据账户数目，而是依据计算力进行投票。</p>
+<p>在比特币系统中，每个节点都可以自行组装一个候选区块，而后，尝试各种nonce值，这就是挖矿。[H(block header)&lt;=target]</p>
+<p>当某个节点找到符合要求的nonce，便获得了<strong>记账权</strong>，从而可以将区块发布到系统中。其他节点受到区块后，验证区块合法性，如果系统中绝大多数节点验证通过，则接收该区块为最新的区块并加入到区块链中。</p>
+<h1 id="BTC"><a href="#BTC" class="headerlink" title="BTC"></a>BTC</h1><h3 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h3><h4 id="交易信息"><a href="#交易信息" class="headerlink" title="交易信息"></a>交易信息</h4><p>A给B转账</p>
+<ul>
+<li>A需要知道B的公钥，以表示收款地址</li>
+<li>B要知道A的公钥（验证A的签名是否合法），A需要在交易信息中给出。</li>
+</ul>
+<p>若干个交易组成默克尔树</p>
+<h4 id="BLOCK"><a href="#BLOCK" class="headerlink" title="BLOCK"></a>BLOCK</h4><ul>
+<li><p>BLOCK header 保存宏观信息，比特币版本，前一个区块的哈希指针，默克尔树的根哈希值，挖矿难度target（保证出块时间在10min），nonce，UTSO等</p>
+</li>
+<li><p>BLOCK body：交易列表。</p>
+</li>
+</ul>
+<h4 id="全节点和轻节点"><a href="#全节点和轻节点" class="headerlink" title="全节点和轻节点"></a>全节点和轻节点</h4><ul>
+<li>轻节点只保留BLOCK header 信息（无法独立验证合法性）</li>
+</ul>
+<h3 id="如何记账"><a href="#如何记账" class="headerlink" title="如何记账"></a>如何记账</h3><h4 id="一致性问题"><a href="#一致性问题" class="headerlink" title="一致性问题"></a>一致性问题</h4><p>账本内容需要分布式共识，比特币中共识协议：依据计算力进行投票。</p>
+<p>在比特币系统中，每个节点都可以自行组装一个候选区块，而后，尝试各种nonce值[H(block header)&lt;=target]，这就是挖矿。当某个节点找到符合要求的nonce，便获得了记账权，从而可以将区块发布到系统中。</p>
+<p>每发布一个合法区块，都有一个出块奖励。</p>
+<p>验证交易合法性后可以将它打包，并且每打包一个交易都有”交易费“。</p>
+<h2 id="UTSO"><a href="#UTSO" class="headerlink" title="UTSO"></a>UTSO</h2><p>记录所有还没花出去的交易的输出，每个元素给出产生这个交易的hash值及它在这个交易里是第几个输出。</p>
+<p>作用是检测新发布的交易是否合法。</p>
+<p>每个新的交易消耗掉一些输出，同时产生新的输出。</p>
+<h3 id="比特币网络"><a href="#比特币网络" class="headerlink" title="比特币网络"></a>比特币网络</h3><p>设计原则：简单鲁棒，不高效。</p>
+<p>节点收到消息后，转发给邻居节点（随机的，物理距离无关）。</p>
+<p>每个节点维护等待写入区块链交易的集合。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>用户把交易发布在比特币网络上，节点收到交易后打包到区块里，把区块发布到比特币网络上。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/">http://example.com/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/63FB52CA-38C1-4392-802C-4CE310FDFBB1_1_105_c.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/01/Android3/"><img class="prev-cover" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h5eazei1ccj20rs0rsad9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">移动软件开发——个人项目</div></div></a></div><div class="next-post pull-right"><a href="/2022/08/21/Android1/"><img class="next-cover" src="https://tva1.sinaimg.cn/large/e6c9d24egy1h5a04i42r1j20g30mr44d.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">安卓实验合集</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/05/04/%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="树状数组、线段树、扫描线"><img class="cover" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h0rwp7z53ij20dw0dwt9l.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-04</div><div class="title">树状数组、线段树、扫描线</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tva1.sinaimg.cn/large/008i3skNly1gwvc7l0xf5j30b40b4weq.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">密码学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hash"><span class="toc-number">1.1.</span> <span class="toc-text">hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%A2%B0%E6%92%9E"><span class="toc-number">1.1.1.</span> <span class="toc-text">哈希碰撞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hiding"><span class="toc-number">1.1.2.</span> <span class="toc-text">hiding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Puzzle-friendly"><span class="toc-number">1.1.3.</span> <span class="toc-text">Puzzle friendly</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D"><span class="toc-number">1.2.</span> <span class="toc-text">签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E8%B4%A6%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">比特币中账户管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-pointer%EF%BC%88%E5%93%88%E5%B8%8C%E6%8C%87%E9%92%88%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">Hash pointer（哈希指针）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markle-Tree-%E9%BB%98%E5%85%8B%E5%B0%94%E6%A0%91"><span class="toc-number">2.2.</span> <span class="toc-text">Markle Tree(默克尔树)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E7%94%A8%E9%80%94"><span class="toc-number">2.2.1.</span> <span class="toc-text">实际用途</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B1%E8%AF%86%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">共识协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E9%9C%80%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.1.</span> <span class="toc-text">去中心化需要解决的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E8%8A%B1%E6%94%BB%E5%87%BB"><span class="toc-number">3.1.1.</span> <span class="toc-text">双花攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%85%B1%E8%AF%86"><span class="toc-number">3.2.</span> <span class="toc-text">分布式共识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CAP-Theorem"><span class="toc-number">3.2.1.</span> <span class="toc-text">CAP Theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E5%85%B1%E8%AF%86%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.2.2.</span> <span class="toc-text">比特币共识协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BTC"><span class="toc-number">4.</span> <span class="toc-text">BTC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97"><span class="toc-number">4.0.1.</span> <span class="toc-text">区块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%98%93%E4%BF%A1%E6%81%AF"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">交易信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BLOCK"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">BLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E8%8A%82%E7%82%B9%E5%92%8C%E8%BD%BB%E8%8A%82%E7%82%B9"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">全节点和轻节点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%B0%E8%B4%A6"><span class="toc-number">4.0.2.</span> <span class="toc-text">如何记账</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">一致性问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UTSO"><span class="toc-number">4.1.</span> <span class="toc-text">UTSO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E7%BD%91%E7%BB%9C"><span class="toc-number">4.1.1.</span> <span class="toc-text">比特币网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/02/CSP/" title="CSP 合集"><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h5scp3adfxj20dw07t74z.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSP 合集"/></a><div class="content"><a class="title" href="/2022/09/02/CSP/" title="CSP 合集">CSP 合集</a><time datetime="2022-09-02T14:41:11.000Z" title="发表于 2022-09-02 22:41:11">2022-09-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/01/Android3/" title="移动软件开发——个人项目"><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h5eazei1ccj20rs0rsad9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="移动软件开发——个人项目"/></a><div class="content"><a class="title" href="/2022/09/01/Android3/" title="移动软件开发——个人项目">移动软件开发——个人项目</a><time datetime="2022-09-01T09:56:11.000Z" title="发表于 2022-09-01 17:56:11">2022-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链&amp;BTC 初探"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/63FB52CA-38C1-4392-802C-4CE310FDFBB1_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="区块链&amp;BTC 初探"/></a><div class="content"><a class="title" href="/2022/08/25/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链&amp;BTC 初探">区块链&amp;BTC 初探</a><time datetime="2022-08-25T09:56:11.000Z" title="发表于 2022-08-25 17:56:11">2022-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/21/Android1/" title="安卓实验合集"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h5a04i42r1j20g30mr44d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安卓实验合集"/></a><div class="content"><a class="title" href="/2022/08/21/Android1/" title="安卓实验合集">安卓实验合集</a><time datetime="2022-08-21T09:56:11.000Z" title="发表于 2022-08-21 17:56:11">2022-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/17/WeChat1/" title="微信小程序实验（合集）"><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h59skmr4ryj20g30mr0wn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序实验（合集）"/></a><div class="content"><a class="title" href="/2022/08/17/WeChat1/" title="微信小程序实验（合集）">微信小程序实验（合集）</a><time datetime="2022-08-17T04:41:11.000Z" title="发表于 2022-08-17 12:41:11">2022-08-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
