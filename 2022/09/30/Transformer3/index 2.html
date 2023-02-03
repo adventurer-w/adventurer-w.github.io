@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transformer笔记3——SwinTransformer | 魔法使いの秘密基地</title><meta name="keywords" content="归纳总结"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简介 分类，分割，检测等任务中均是刷分神器   官方开源，各预训练模型全部给出   新一代backbone，可直接套用在各项下游任务中  提供大，中，小个版本模型；可以自由选择合适的 小窗口内算自注意力，和长度成线性关系 使用 相对位置偏移   我们训练的是下图上方的那个 bias table  解决的问题图像中像素点太多了，如果需要更多的特征就必须构建很长的序列，越长的序列算起注意力肯定越慢，这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer笔记3——SwinTransformer">
+<meta property="og:url" content="http://example.com/2022/09/30/Transformer3/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="简介 分类，分割，检测等任务中均是刷分神器   官方开源，各预训练模型全部给出   新一代backbone，可直接套用在各项下游任务中  提供大，中，小个版本模型；可以自由选择合适的 小窗口内算自注意力，和长度成线性关系 使用 相对位置偏移   我们训练的是下图上方的那个 bias table  解决的问题图像中像素点太多了，如果需要更多的特征就必须构建很长的序列，越长的序列算起注意力肯定越慢，这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg">
+<meta property="article:published_time" content="2022-09-30T14:55:11.000Z">
+<meta property="article:modified_time" content="2022-10-28T15:14:38.031Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="归纳总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2022/09/30/Transformer3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Transformer笔记3——SwinTransformer',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-28 23:14:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tva1.sinaimg.cn/large/008i3skNly1gwvc7l0xf5j30b40b4weq.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Transformer笔记3——SwinTransformer</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-30T14:55:11.000Z" title="发表于 2022-09-30 22:55:11">2022-09-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-28T15:14:38.031Z" title="更新于 2022-10-28 23:14:38">2022-10-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Transformer笔记3——SwinTransformer"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li><p>分类，分割，检测等任务中均是刷分神器 </p>
+</li>
+<li><p>官方开源，各预训练模型全部给出 </p>
+</li>
+<li>新一代backbone，可直接套用在各项下游任务中 </li>
+<li>提供大，中，小个版本模型；可以自由选择合适的</li>
+<li>小窗口内算自注意力，和长度成线性关系</li>
+<li>使用 相对位置偏移</li>
+</ul>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2022-10-28%2022.54.00.png" alt="截屏2022-10-28 22.54.00"></p>
+<p><strong>我们训练的是下图上方的那个 bias table</strong></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2022-10-28%2022.54.39.png" alt="截屏2022-10-28 22.54.39"></p>
+<h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>图像中像素点太多了，如果需要更多的特征就必须构建很长的序列，越长的序列算起注意力肯定越慢，这就导致了效率问题 </p>
+<p>能否用窗口和分层的形式来替代长序列的方法呢？这就是它的本质 </p>
+<p>CNN中经常提到感受野，transformer中该如何体现呢？（答案就是分层）</p>
+<p>分成：借助CNN的思想，每层的序列长度都缩小，扩大每项的感受野</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/截屏2022-09-30 16.22.10.png" alt=""></p>
+<h2 id="Transformer-Blocks"><a href="#Transformer-Blocks" class="headerlink" title="Transformer Blocks"></a>Transformer Blocks</h2><p>W-MSA：基于窗口的注意力计算 </p>
+<p>SW-MSA：窗口滑动后重新计算注意力 </p>
+<p>串联在一起就是一个block</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/截屏2022-09-30 16.30.53.png" style="zoom:30%;" /></p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="Patch-Embedding"><a href="#Patch-Embedding" class="headerlink" title="Patch Embedding"></a>Patch Embedding</h3><p>最开始的那一步，构造序列</p>
+<p>输入：图像数据（224，224，3） </p>
+<p>输出：（3136，96）相当于序列长度是3136个，每个的向量是96维特征 </p>
+<p>通过卷积得到，Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4)） </p>
+<p>3136也就是 (224/4) * (224/4)得到的，也可以根据需求更改卷积参数</p>
+<h3 id="window-partition"><a href="#window-partition" class="headerlink" title="window_partition"></a>window_partition</h3><p>Resape，把特征图按照窗口大小划分</p>
+<p>输入：特征图（56，56，96） </p>
+<p>默认窗口大小为7，所以总共可以分成8*8个窗口 </p>
+<p>输出：特征图（64，7，7，96）  64个窗口，每个大小7*7</p>
+<p>之前的单位是序列，现在的单位是窗口（共64个窗口）</p>
+<h3 id="W-MSA（Window-Multi-head-Self-Attention）"><a href="#W-MSA（Window-Multi-head-Self-Attention）" class="headerlink" title="W-MSA（Window Multi-head Self Attention）"></a>W-MSA（Window Multi-head Self Attention）</h3><ul>
+<li>目的：减少计算量</li>
+<li>缺点：窗口间无法进行信息的交互</li>
+</ul>
+<p>对得到的窗口，<strong>计算各个窗口自己的自注意力得分 </strong></p>
+<p>qkv三个矩阵放在一起了：（3（qkv），64（窗口数），3（三头），49（大小7*7），32（原来96维，分三头）） </p>
+<p>3个矩阵，64个窗口，heads为3，窗口大小7*7=49，每个head特征96/3=32 </p>
+<p>attention结果为：（64，3，49，49） 每个头都会得出每个窗口内的自注意力</p>
+<h3 id="window-reverse"><a href="#window-reverse" class="headerlink" title="window_reverse"></a>window_reverse</h3><p>通过得到的attention计算得到新的特征（64，49，96） </p>
+<p>总共64个窗口，每个窗口7*7的大小，每个点对应96维向量 </p>
+<p>window_reverse就是通过reshape操作还原回去（56，56，96） </p>
+<p>这就得到了跟输入特征图一样的大小，但是其已经计算过了attention</p>
+<h3 id="SW-MSA（Shifted-Window）"><a href="#SW-MSA（Shifted-Window）" class="headerlink" title="SW-MSA（Shifted Window）"></a>SW-MSA（Shifted Window）</h3><p>为什么要shift？原来的window都是算自己内部的 </p>
+<p>这样就会导致只有内部计算，没有它们之间的关系 </p>
+<p>容易上模型局限在自己的小领地，可以通过shift操作来改善</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2022-10-28%2022.25.45.png" alt="截屏2022-10-28 22.25.45"></p>
+<p>在shift过后，为了减小计算量，采用拼接过后+mask：</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2022-10-28%2022.21.44.png" alt="截屏2022-10-28 22.21.44" style="zoom:50%;" /></p>
+<h3 id="PatchMerging"><a href="#PatchMerging" class="headerlink" title="PatchMerging"></a>PatchMerging</h3><p>也就是下采样操作，有点像池化</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2022-10-28%2021.57.41.png" alt="截屏2022-10-28 21.57.41" style="zoom:30%;" /></p>
+<p>这个相当于间接的 （对H和W维度进行间隔采样后拼接在一起，得到H/2,W/2,C*4）</p>
+<p><strong>对4C做卷积变成2C</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/09/30/Transformer3/">http://example.com/2022/09/30/Transformer3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">归纳总结</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/10/20/mae/"><img class="prev-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/DBAC18EC-952B-4B36-B2D9-B9A5F74C90D4.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">自监督——MAE</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/29/Transformer2/"><img class="next-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Transformer笔记2 —— VIT</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/9F442EA0-F893-45C6-8967-10A3799F6DFC.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记1 —— BERT</div></div></a></div><div><a href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记2 —— VIT</div></div></a></div><div><a href="/2022/11/23/detection/" title="目标检测相关摘录"><img class="cover" src="https://tva1.sinaimg.cn/large/008vxvgGly1h8f7n9lbaoj30om0ommyr.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-23</div><div class="title">目标检测相关摘录</div></div></a></div><div><a href="/2022/10/20/mae/" title="自监督——MAE"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/DBAC18EC-952B-4B36-B2D9-B9A5F74C90D4.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">自监督——MAE</div></div></a></div><div><a href="/2022/01/28/week1/" title="深度学习基础——week1"><img class="cover" src="https://tva1.sinaimg.cn/large/008i3skNgy1gysr05fzulj30go0d6q4o.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-28</div><div class="title">深度学习基础——week1</div></div></a></div><div><a href="/2022/03/09/week2/" title="深度学习基础——week2"><img class="cover" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h0420f55duj20l10swn1z.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-09</div><div class="title">深度学习基础——week2</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tva1.sinaimg.cn/large/008i3skNly1gwvc7l0xf5j30b40b4weq.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">解决的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformer-Blocks"><span class="toc-number">3.</span> <span class="toc-text">Transformer Blocks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.</span> <span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch-Embedding"><span class="toc-number">4.1.</span> <span class="toc-text">Patch Embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-partition"><span class="toc-number">4.2.</span> <span class="toc-text">window_partition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#W-MSA%EF%BC%88Window-Multi-head-Self-Attention%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">W-MSA（Window Multi-head Self Attention）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-reverse"><span class="toc-number">4.4.</span> <span class="toc-text">window_reverse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SW-MSA%EF%BC%88Shifted-Window%EF%BC%89"><span class="toc-number">4.5.</span> <span class="toc-text">SW-MSA（Shifted Window）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PatchMerging"><span class="toc-number">4.6.</span> <span class="toc-text">PatchMerging</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/detection/" title="目标检测相关摘录"><img src="https://tva1.sinaimg.cn/large/008vxvgGly1h8f7n9lbaoj30om0ommyr.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="目标检测相关摘录"/></a><div class="content"><a class="title" href="/2022/11/23/detection/" title="目标检测相关摘录">目标检测相关摘录</a><time datetime="2022-11-23T14:56:11.000Z" title="发表于 2022-11-23 22:56:11">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/20/mae/" title="自监督——MAE"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/DBAC18EC-952B-4B36-B2D9-B9A5F74C90D4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自监督——MAE"/></a><div class="content"><a class="title" href="/2022/10/20/mae/" title="自监督——MAE">自监督——MAE</a><time datetime="2022-10-20T14:56:11.000Z" title="发表于 2022-10-20 22:56:11">2022-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/30/Transformer3/" title="Transformer笔记3——SwinTransformer"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer笔记3——SwinTransformer"/></a><div class="content"><a class="title" href="/2022/09/30/Transformer3/" title="Transformer笔记3——SwinTransformer">Transformer笔记3——SwinTransformer</a><time datetime="2022-09-30T14:55:11.000Z" title="发表于 2022-09-30 22:55:11">2022-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer笔记2 —— VIT"/></a><div class="content"><a class="title" href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT">Transformer笔记2 —— VIT</a><time datetime="2022-09-29T14:56:11.000Z" title="发表于 2022-09-29 22:56:11">2022-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/9F442EA0-F893-45C6-8967-10A3799F6DFC.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer笔记1 —— BERT"/></a><div class="content"><a class="title" href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT">Transformer笔记1 —— BERT</a><time datetime="2022-09-29T12:56:11.000Z" title="发表于 2022-09-29 20:56:11">2022-09-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
