@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>线性dp合集 | 魔法使いの秘密基地</title><meta name="keywords" content="dp"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="dp合集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性dp合集">
+<meta property="og:url" content="http://example.com/2022/03/30/%E7%BA%BF%E6%80%A7dp/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="dp合集">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/3F670E4F-8C67-44B2-BB03-B3BB84F6213F_1_105_c.jpeg">
+<meta property="article:published_time" content="2022-03-30T13:11:17.000Z">
+<meta property="article:modified_time" content="2022-12-28T09:18:30.248Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="dp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/3F670E4F-8C67-44B2-BB03-B3BB84F6213F_1_105_c.jpeg"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2022/03/30/%E7%BA%BF%E6%80%A7dp/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '线性dp合集',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-28 17:18:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/3F670E4F-8C67-44B2-BB03-B3BB84F6213F_1_105_c.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">线性dp合集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-30T13:11:17.000Z" title="发表于 2022-03-30 21:11:17">2022-03-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-28T09:18:30.248Z" title="更新于 2022-12-28 17:18:30">2022-12-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="线性dp合集"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="最长公共上升子序列-（LCIS）"><a href="#最长公共上升子序列-（LCIS）" class="headerlink" title="最长公共上升子序列 （LCIS）"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/274/">最长公共上升子序列 </a>（LCIS）</h1><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>对于两个数列 A和 B，如果它们都包含一段位置不一定连续的数，且数值是严格递增的，那么称这一段数是两个数列的公共上升子序列，而所有的公共上升子序列中最长的就是最长公共上升子序列。</p>
+<p>数列 A 和 B的长度均不超过 30003000。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>状态表示：<code>f[i][j]</code>代表所有<code>a[1 ~ i]</code>和<code>b[1 ~ j]</code>中以<code>b[j]</code>结尾的公共上升子序列的集合；<code>f[i][j]</code>的值等于该集合的子序列中长度的最大值；</p>
+<p>首先依据公共子序列中是否包含<code>a[i]</code>，将<code>f[i][j]</code>所代表的集合划分成两个不重不漏的子集：</p>
+<p>不包含<code>a[i]</code>的子集，最大值是<code>f[i - 1][j]</code>；<br>包含<code>a[i]</code>的子集，将这个子集继续划分，依据是子序列的倒数第二个元素在b[]中是哪个数：<br>子序列只包含<code>b[j]</code>一个数，长度是1；<br>子序列的倒数第二个数是<code>b[1]</code>的集合，最大长度是<code>f[i - 1][1] + 1</code>；<br>…<br>子序列的倒数第二个数是<code>b[j - 1]</code>的集合，最大长度是<code>f[i - 1][j - 1] + 1</code>；<br>如果直接按上述思路实现，需要三重循环：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j ++ )</span><br><span class="line">    &#123;</span><br><span class="line">        f[i][j] = f[i - <span class="number">1</span>][j];</span><br><span class="line">        <span class="keyword">if</span> (a[i] == b[j])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> maxv = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; j; k ++ )</span><br><span class="line">                <span class="keyword">if</span> (a[i] &gt; b[k])</span><br><span class="line">                    maxv = <span class="built_in">max</span>(maxv, f[i - <span class="number">1</span>][k] + <span class="number">1</span>);</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i][j], maxv);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们发现每次循环求得的<code>maxv</code>是满足<code>a[i] &gt; b[k]</code>的<code>f[i - 1][k] + 1</code>的前缀最大值。<br>因此可以直接将<code>maxv</code>提到第一层循环外面，减少重复计算，此时只剩下两重循环。</p>
+<p>最终答案枚举子序列结尾取最大值即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">3010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N], b[N];</span><br><span class="line"><span class="keyword">int</span> f[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) cin&gt;&gt;a[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++) cin&gt;&gt;b[j];</span><br><span class="line">    a[<span class="number">0</span>]=b[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> maxv = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">            f[i][j] = f[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">if</span> (a[i] == b[j]) f[i][j] = <span class="built_in">max</span>(f[i][j], maxv);</span><br><span class="line">            <span class="keyword">if</span> (a[i] &gt; b[j]) maxv = <span class="built_in">max</span>(maxv, f[i - <span class="number">1</span>][j] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) res = <span class="built_in">max</span>(res, f[n][i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>技巧总结：在纸上列出式子，考虑怎么用数据结构来优化，这里我们用到的数据结构就是一个int。</p>
+<h1 id="分级"><a href="#分级" class="headerlink" title="分级"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/275/">分级</a></h1><h2 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a>题意</h2><p>给定长度为 $N$ 的序列 $A$, 构造一个长度为 $N$ 的序列 $B$, 满足:</p>
+<ol>
+<li>$B$ 非严格单调, 即 $B_{1} \leq B_{2} \leq \ldots \leq B_{N}$ 或 $B_{1} \geq B_{2} \geq \ldots \geq B_{N}$ 。</li>
+<li>最小化 $S=\sum_{i=1}^{N}\left|A_{i}-B_{i}\right|_{\text {。 }}$<br>只需要求出这个最小值 $S_{\text {。 }}$</li>
+</ol>
+<h2 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h2><p>引理：一定存在一组最小的方案B，B中所有元素都在A中出现过（证明见y总视频）（注意：可以取重复的）</p>
+<p>状态表示：<code>f[i][j]</code>表示所有给<code>B[1...i]</code>分配好了值，且最后一个数分配的是<code>A[j]</code>的集合。属性：MIN(S)</p>
+<p>状态转移：依据倒数第二个数分配的是哪个<code>A[i]</code>将<code>f[i][j]</code>所代表的集合划分成j个不重不漏的子集：</p>
+<p>倒数第二个数选取的是<code>A[1]</code>的所有方案的结合，最小值是<code>f[i - 1][1] + abs(B[i] - A&#39;[j])</code>;<br>倒数第二个数选取的是<code>A[2]</code>的所有方案的结合，最小值是 <code>f[i - 1][2] + abs(B[i] - A&#39;[j])</code>;<br>…<br><code>f[i][j]</code>在所有子集的最小值中取min即可。</p>
+<p>优化：类似于最长公共上升子序列的优化方式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2010</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N], b[N];</span><br><span class="line"><span class="keyword">int</span> f[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) b[i]=a[i];</span><br><span class="line">    <span class="built_in">sort</span>(b+<span class="number">1</span>,b+<span class="number">1</span>+n);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> minv=INF;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">            minv = <span class="built_in">min</span>(minv,f[i<span class="number">-1</span>][j]);</span><br><span class="line">            f[i][j]=minv+<span class="built_in">abs</span>(b[j]-a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res=INF;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) res=<span class="built_in">min</span>(res,f[n][i]);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> res=<span class="built_in">dp</span>();</span><br><span class="line">    <span class="built_in">reverse</span>(a+<span class="number">1</span>,a+n+<span class="number">1</span>);</span><br><span class="line">    res = <span class="built_in">min</span>(res,<span class="built_in">dp</span>());</span><br><span class="line">    cout&lt;&lt;res&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>技巧总结：</p>
+<h1 id="移动服务"><a href="#移动服务" class="headerlink" title="移动服务"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/276/">移动服务</a></h1><h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a>题意</h2><p>一个公司有三个移动服务员，最初分别在位置 1，2，3 处.如果某个位置（用一个整数表示）有一个请求，那么公司必须指派某名员工赶到那个地方去。</p>
+<p>从 p 到 q 移动一个员工，需要花费 c(p,q)。</p>
+<p>公司必须按顺序依次满足所有请求，<strong>且过程中不能去其他额外的位置</strong>，目标是最小化公司花费，请你帮忙计算这个最小花费。</p>
+<h2 id="思考-2"><a href="#思考-2" class="headerlink" title="思考"></a>思考</h2><p>直接的想法，已完成i-1个请求——&gt;已完成i个请求。<code>f[i][x][y][z]</code>表示已完成i个请求，位置分别是x,y,z。</p>
+<p>优化：发现第i个请求完成时，一定会有某个员工在pi上。所以<code>f[i][x][y]</code></p>
+<p>转移：<code>f[i+1,x,y]=min(f[i+1,x,y],f[i,x,y]+c(Pi,Pi+1))</code></p>
+<p><code>f[i+1,Pi+1,y]=min(f[i+1,Pi,y],f[i,x,y]+c(x,Pi+1))</code></p>
+<p><code>f[i+1,x,Pi+1]=min(f[i+1,x,Pi+1],f[i,x,y]+c(y,Pi+1))</code></p>
+<p>目标：<code>f[N][?][?]</code></p>
+<p>初始化：P0=3，<code>f[0][1][2]=0</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">1010</span>,M=<span class="number">210</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> mp[N][N],p[N];</span><br><span class="line"><span class="keyword">int</span> f[N][M][M];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;m,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;mp[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0x3f</span>,<span class="keyword">sizeof</span> f);</span><br><span class="line">    f[<span class="number">0</span>][<span class="number">1</span>][<span class="number">2</span>]=<span class="number">0</span>,p[<span class="number">0</span>]=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;p[i]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">1</span>;x&lt;=m;x++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> y=<span class="number">1</span>;y&lt;=m;y++)&#123;</span><br><span class="line">                <span class="keyword">int</span> z = p[i], v = f[i][x][y];</span><br><span class="line">                <span class="keyword">if</span> (x == y || x == z || y == z) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">int</span> u = p[i + <span class="number">1</span>];</span><br><span class="line">                f[i + <span class="number">1</span>][x][y] = <span class="built_in">min</span>(f[i + <span class="number">1</span>][x][y], v + mp[z][u]);</span><br><span class="line">                f[i + <span class="number">1</span>][z][y] = <span class="built_in">min</span>(f[i + <span class="number">1</span>][z][y], v + mp[x][u]);</span><br><span class="line">                f[i + <span class="number">1</span>][x][z] = <span class="built_in">min</span>(f[i + <span class="number">1</span>][x][z], v + mp[y][u]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res=<span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">1</span>;x&lt;=m;x++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y=<span class="number">1</span>;y&lt;=m;y++)&#123;</span><br><span class="line">            res=<span class="built_in">min</span>(res,f[n][x][y]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>技巧总结：用尽量少的维度覆盖状态空间。</p>
+<h1 id="传纸条"><a href="#传纸条" class="headerlink" title="传纸条"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/277/">传纸条</a></h1><h2 id="题意-3"><a href="#题意-3" class="headerlink" title="题意"></a>题意</h2><p>N*M的矩阵，一开始所有格子都有一个数字，从左上角走到右下角，走2次。经过格子可以拿起格子上的数，每个格子的数只能被拿一次（但可走两次）,求拿起的最大值。</p>
+<h2 id="思考-3"><a href="#思考-3" class="headerlink" title="思考"></a>思考</h2><p>考虑两条路线<strong>同时</strong>走，状态表示<code>f[X1][Y1][X2][Y2]</code>。</p>
+<p>优化：因为X1+Y1=X2+Y2，<code>f[k][X1][X2]</code>，表示第一条从（1，1）—&gt;（x1,k-x1），第二条从（1，1）—&gt;（x2,k-x2）的路线，取得的最大值。</p>
+<p>状态划分：找最后一个不同点：最后一步</p>
+<ul>
+<li>第一条往右，第二条往右 <code>f[k][x1][x2] = f[k-1][x1][x2]+v[x1][k-x1]+(v[x2][k-x2])</code></li>
+<li>第一条往右，第二条往下 <code>f[k][x1][x2] = f[k-1][x1][x2-1]+v[x1][k-x1]+(v[x2][k-x2])</code></li>
+<li>第一条往下，第二条往右<code>f[k][x1][x2] = f[k-1][x1-1][x2]+v[x1][k-x1]+(v[x2][k-x2])</code></li>
+<li>第一条往下，第二条往下<code>f[k][x1][x2] = f[k-1][x1-1][x2-1]+v[x1][k-x1]+(v[x2][k-x2])</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">55</span>,M=<span class="number">60</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> w[N][N];</span><br><span class="line"><span class="keyword">int</span> f[M*<span class="number">2</span>][N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;w[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">2</span>;k&lt;=n+m;k++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x1 = <span class="built_in">max</span>(<span class="number">1</span>,k-m);x1&lt;=<span class="built_in">min</span>(k<span class="number">-1</span>,n);x1++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x2 = <span class="built_in">max</span>(<span class="number">1</span>,k-m);x2&lt;=<span class="built_in">min</span>(k<span class="number">-1</span>,n);x2++)&#123;</span><br><span class="line">                <span class="keyword">int</span> t = w[x1][k-x1];</span><br><span class="line">                <span class="keyword">if</span>(x2!=x1) t+=w[x2][k-x2];</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> a=<span class="number">0</span>;a&lt;=<span class="number">1</span>;a++)&#123;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> b=<span class="number">0</span>;b&lt;=<span class="number">1</span>;b++)&#123;</span><br><span class="line">                        f[k][x1][x2] = <span class="built_in">max</span>(f[k][x1][x2],f[k<span class="number">-1</span>][x1-a][x2-b]+t);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;                   </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;f[n+m][n][n];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>技巧总结：不要有先走一条路再走第二条的思维定势。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/03/30/%E7%BA%BF%E6%80%A7dp/">http://example.com/2022/03/30/%E7%BA%BF%E6%80%A7dp/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/dp/">dp</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/3F670E4F-8C67-44B2-BB03-B3BB84F6213F_1_105_c.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/30/%E8%83%8C%E5%8C%85%E7%BB%83%E4%B9%A0/"><img class="prev-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/052D7853-5C80-4507-88C6-E90139CADC44_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">背包合集</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/25/week3/"><img class="next-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/FE41BD23-D716-4E2D-B6EA-A316689B7512.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深度学习基础——week3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/31/%E5%8C%BA%E9%97%B4%E6%A0%91%E5%BD%A2dp/" title="区间、树形dp合集"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/5FD0F85A-9BAD-41E6-8A61-0F6BF55E3A1B_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-31</div><div class="title">区间、树形dp合集</div></div></a></div><div><a href="/2022/05/13/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97DP/" title="单调队列DP"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/IMG_3781.JPG" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-13</div><div class="title">单调队列DP</div></div></a></div><div><a href="/2022/04/02/%E7%8A%B6%E5%8E%8B/" title="状压dp"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/4C858E1D-3CF2-4FED-BEC6-EF861C9FA54A_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-02</div><div class="title">状压dp</div></div></a></div><div><a href="/2022/04/01/%E7%8E%AF%E5%BD%A2%E4%B8%8E%E5%90%8E%E6%95%88%E6%80%A7%E5%A4%84%E7%90%86/" title="环形dp"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/07CE0C50-D028-499A-8040-295A10BEDE68_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-01</div><div class="title">环形dp</div></div></a></div><div><a href="/2022/03/30/%E8%83%8C%E5%8C%85%E7%BB%83%E4%B9%A0/" title="背包合集"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/052D7853-5C80-4507-88C6-E90139CADC44_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-30</div><div class="title">背包合集</div></div></a></div><div><a href="/2022/04/03/%E9%80%86%E5%90%91%E8%83%8C%E5%8C%85/" title="逆向背包"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/BE849103-2C7A-41B6-A9CE-21FC347E6D5F_4_5005_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-03</div><div class="title">逆向背包</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97-%EF%BC%88LCIS%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">最长公共上升子序列 （LCIS）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-number">1.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">1.2.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E7%BA%A7"><span class="toc-number">2.</span> <span class="toc-text">分级</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-1"><span class="toc-number">2.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83-1"><span class="toc-number">2.2.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">移动服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-2"><span class="toc-number">3.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83-2"><span class="toc-number">3.2.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BA%B8%E6%9D%A1"><span class="toc-number">4.</span> <span class="toc-text">传纸条</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-3"><span class="toc-number">4.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83-3"><span class="toc-number">4.2.</span> <span class="toc-text">思考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/water0B101/" title="杂谈101B：回顾与展望"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/[lab.magiconch.com][One-Last-Image]-1676018174594.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="杂谈101B：回顾与展望"/></a><div class="content"><a class="title" href="/2023/03/19/water0B101/" title="杂谈101B：回顾与展望">杂谈101B：回顾与展望</a><time datetime="2023-03-19T11:57:54.000Z" title="发表于 2023-03-19 19:57:54">2023-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/18/lqb666/" title="算法复习笔记"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A62D7EBF-99B7-41CA-AC1D-B5B68B3C9EA4_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法复习笔记"/></a><div class="content"><a class="title" href="/2023/03/18/lqb666/" title="算法复习笔记">算法复习笔记</a><time datetime="2023-03-18T11:57:54.000Z" title="发表于 2023-03-18 19:57:54">2023-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/11/anime/" title="杂谈100B：动画安利（个人向）"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/[lab.magiconch.com][One-Last-Image]-1676018174594.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="杂谈100B：动画安利（个人向）"/></a><div class="content"><a class="title" href="/2023/02/11/anime/" title="杂谈100B：动画安利（个人向）">杂谈100B：动画安利（个人向）</a><time datetime="2023-02-11T11:57:54.000Z" title="发表于 2023-02-11 19:57:54">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/01/SAR%20Change%20Detection/" title="SAR图像变化检测深度学习研究方法"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SAR图像变化检测深度学习研究方法"/></a><div class="content"><a class="title" href="/2023/02/01/SAR%20Change%20Detection/" title="SAR图像变化检测深度学习研究方法">SAR图像变化检测深度学习研究方法</a><time datetime="2023-02-01T14:56:11.000Z" title="发表于 2023-02-01 22:56:11">2023-02-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/09/6DPose-1/" title="6D姿态估计-笔记1"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="6D姿态估计-笔记1"/></a><div class="content"><a class="title" href="/2023/01/09/6DPose-1/" title="6D姿态估计-笔记1">6D姿态估计-笔记1</a><time datetime="2023-01-09T14:56:11.000Z" title="发表于 2023-01-09 22:56:11">2023-01-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
