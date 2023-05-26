@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例 | 魔法使いの秘密基地</title><meta name="keywords" content="归纳总结"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="The application of large-scale pre-trained models in visual understanding—the case of CLIP本篇博客将以CLIP为例，介绍大规模预训练模型在视觉理解上的应用 我会先介绍问题的背景，也就是什么是大规模预训练模型。然后以Open AI的CLIP模型为例，介绍其在视频检索，图像生成，目标检测，三个方向上的应用。最后进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例">
+<meta property="og:url" content="http://example.com/2023/05/10/CLIP/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="The application of large-scale pre-trained models in visual understanding—the case of CLIP本篇博客将以CLIP为例，介绍大规模预训练模型在视觉理解上的应用 我会先介绍问题的背景，也就是什么是大规模预训练模型。然后以Open AI的CLIP模型为例，介绍其在视频检索，图像生成，目标检测，三个方向上的应用。最后进">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png">
+<meta property="article:published_time" content="2023-05-10T14:56:11.000Z">
+<meta property="article:modified_time" content="2023-05-26T06:56:04.705Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="归纳总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2023/05/10/CLIP/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-26 14:56:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-10T14:56:11.000Z" title="发表于 2023-05-10 22:56:11">2023-05-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-26T06:56:04.705Z" title="更新于 2023-05-26 14:56:04">2023-05-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="The-application-of-large-scale-pre-trained-models-in-visual-understanding—the-case-of-CLIP"><a href="#The-application-of-large-scale-pre-trained-models-in-visual-understanding—the-case-of-CLIP" class="headerlink" title="The application of large-scale pre-trained models in visual understanding—the case of CLIP"></a>The application of large-scale pre-trained models in visual understanding—the case of CLIP</h1><p>本篇博客将以CLIP为例，介绍大规模预训练模型在视觉理解上的应用</p>
+<p>我会先介绍问题的背景，也就是什么是大规模预训练模型。然后以Open AI的CLIP模型为例，介绍其在视频检索，图像生成，目标检测，三个方向上的应用。最后进行总结</p>
+<h1 id="Background-of-Pre-trained-mode"><a href="#Background-of-Pre-trained-mode" class="headerlink" title="Background of Pre-trained mode"></a>Background of Pre-trained mode</h1><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-05-26%2014.36.55.png" alt="截屏2023-05-26 14.36.55"></p>
+<p>视觉理解的历史其实是非常悠久的。有人提出 它是经历了 四个技术变迁，四个范式的转变。早期是基于这种小规模的专家系统后来呢是基于浅层的机器学习，像svm，决策树。这往往需要人工取提取特征，然后经过机器学习的方法 把这些特征组合起来。</p>
+<p>但是后来随着深度学习的出现， 这种特征的人工选取 已经不再重要了，深度学习能够摆脱复杂的特征工程，机器可以自动的完成。</p>
+<p>近几年，随着数据集的增大和算力的提升，出现了预训练的方法。通过海量的数据，先预先学习一个模型参数，然后再以用于不同的任务。</p>
+<p>具体来说，传统的机器学习和深度学习方法呢，是假设有大量未标注的数据，从这里面选取出来一些，做数据标注，形成一个目标任务的数据集，再针对这个数据集进行训练，最终得到我们的模型。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526143659374.png" alt="image-20230526143659374"></p>
+<p>互联网的发展带来大量的数据，特别是未标注的数据，那么有没有办法从这些未标注的数据里面进行预训练，学习一个模型，然后在下游任务的时候，在具体的任务上进行精调，这样得到一个更好的下游任务的模型。这就是预训练模型解决问题的方法。</p>
+<p>当然，如今的预训练模型越来越朝着few-shot learning，甚至是zero-shot learning的方向发展。</p>
+<p>随着预训练模型规模的不断扩大，一些大语言模型，出现了“涌现”的能力，有非常好的效果，比如chatGPT，这也使得“大规模预训练模型”受到了学术界和社会广泛的关注和期待。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526143719905.png" alt="image-20230526143719905"></p>
+<p>这是一些代表性的预训练模型，最早的一批预训练模型是出现在NLP领域，比如说BERT和GPT。</p>
+<p>后来CV和多模态领域涌现出了一系列的工作，像是CLIP、Dalle2、包括上个月发布的segment anything，都取得了非常好的效果</p>
+<h1 id="CLIP"><a href="#CLIP" class="headerlink" title="CLIP"></a>CLIP</h1><h2 id="Zero-Shot-Learning"><a href="#Zero-Shot-Learning" class="headerlink" title="Zero-Shot Learning"></a>Zero-Shot Learning</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526143802003.png" alt="image-20230526143802003"></p>
+<p>在讲CLIP之前，我想先简单介绍一下Zero-Shot Learning这个概念</p>
+<p>如图所示，最左边一列是训练集图片，最右边一列的斑马，是测试集的图片，并且训练集类别和测试集类别不重合，也就是说，测试集图片 就是模型没有见过的图片，也就是Zero-Shot。</p>
+<p>zero-shot learning要做的事情，就是从训练集图片中学习出一些属性</p>
+<p>比如这里学到的horselike、stripe(straɪp)和black&amp;white，然后将这些属性相结合，得到融合特征。</p>
+<p>这个融合特征，刚好和测试集的 斑马的特征 相匹配，最终得到预测结果为斑马。</p>
+<p>这个过程就是zero-shot learning。</p>
+<h2 id="Background-of-CLIP"><a href="#Background-of-CLIP" class="headerlink" title="Background of CLIP"></a><strong>Background</strong> of CLIP</h2><p>CLIP是OpenAi在2021年2月发布的，用于匹配图像和文本的预训练模型，在很多任务表现上达到了当时的SOTA。最出色的一点是CLIP在不使用imagenet训练集的情况下，也就是不使用128万张图片的任何一张进行训练的情况下，他直接zero-shot进行推理，就可以和之前有监督训练好的resnet50达到同样的效果。</p>
+<p>CLIP模型主要解决了下面两个问题</p>
+<ul>
+<li><p>第一是模型训练需要用大量的标注数据，获取这些标签需要大量的人力和时间；同时呢数据被标注后，会被标签限制</p>
+</li>
+<li><p>第二点是，过去的模型，泛化能力很差，迁移到新的训练任务也比较困难</p>
+</li>
+</ul>
+<p>为了解决这两个问题，作者团队首先收集了4亿图片文本对作为训练样本。</p>
+<p>之所以要构建新的数据集，是因为以往有的数据集要么规模太小，相是COCO，要么数据标注质量太差，如YFCC100Milion。</p>
+<h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a><strong>Approach</strong></h2><h3 id="Pre-train"><a href="#Pre-train" class="headerlink" title="Pre-train"></a><strong>Pre-train</strong></h3><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144014461.png" alt="image-20230526144014461"></p>
+<p>首先是预训练的过程，使用的是对比学习的方法。</p>
+<p>数据是图片和它对应的文本描述对，文本描述输入进TextEncoder，提取到文本特征T，图片由ImageEncoder得到图片特征I。</p>
+<p>有N个图片和文本描述，所以能提取到N个文本特征T1到TN，还有N个图片特征I1到IN。</p>
+<p>将他们的特征进行组合，填进这个特征表里面，可以看到对角线上是配对的，在对比学习中称为正样本，其他地方都是负样本。也就是说就有N个正样本和N方减N个负样本。然后用他们进行对比学习的训练</p>
+<p>关于网络模型的选择，TextEncoder使用的是Transformer，ImageEncoder它是尝试了8个模型，从resnet到ViT,实验发现ImageEncoder的性能是与网络复杂度成正相关的，所以他这里使用了ViT的large14</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144035820.png" alt="image-20230526144035820"></p>
+<p>这里展示了训练的伪代码</p>
+<p>先是将文本和图片分别输入对应的Encoder，提取特征。</p>
+<p>再将它通过一个投射层，也就是全连接层，目的是将单模态特征投射到多模态中，再进行L2的正则化。</p>
+<p>然后将这两个特征进行余弦相似度计算，最后求出Loss</p>
+<p>那么为什么要使用nlp的信号，也就是文本，来训练视觉模型呢？这有一下三点好处</p>
+<ul>
+<li><p>第一是无需标注，可以节省大量的人力和时间 </p>
+</li>
+<li><p>第二点是因为监督信号是一段文本，相比固定的标签，自由度大了很多</p>
+</li>
+<li><p>第三点是学到的特征是多模态的，易于做zero-shot transfer。</p>
+</li>
+</ul>
+<h3 id="Why-use-contrastive-learning"><a href="#Why-use-contrastive-learning" class="headerlink" title="Why use contrastive learning"></a><strong>Why</strong> <strong>use</strong> contrastive learning</h3><p>作者解释了采用对比学习的原因</p>
+<p>由于数据集有四个亿的图片文本对，所以训练的效率是非常重要的</p>
+<p>如果使用预测模型来完成，也就是逐字逐句预测出文本的话，这个任务很难，效率也是非常低的，因为一个图片可能会对应很多种文本描述，同一个文本也对应着很多种场景。</p>
+<p>所以作者选择使用对比学习的方法判断文本和图片是否为一个配对，训练效率就有很大提升。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144143266.png" alt="image-20230526144143266"></p>
+<p>为此作者设计了一些实验，图中蓝线是使用Transformer直接预测文本，橙线是使用Bag of words，也就是提取一些embidding之后再训练，这样效率就提升了三倍。</p>
+<p>最后就是CLIP的对比学习方法，可以看到训练效率进一步提高了四倍</p>
+<p>这也就说明了基于对比学习的方法是非常高效的</p>
+<h3 id="Zero-shot-Prediction"><a href="#Zero-shot-Prediction" class="headerlink" title="Zero-shot Prediction"></a>Zero-shot Prediction</h3><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144158436.png" alt="image-20230526144158436"></p>
+<p>接下来介绍CLIP的zero-shot预测部分</p>
+<p>CLIP通过引入NLP领域的Prompt template方法，将类别以填空的形式构造成一句文本描述句子，送进TextEncoder得到每个类别的特征向量。</p>
+<p>在做推理的时候，对于任意一张输入的照片，将它输入ImageEncoder提取特征后和所有的文本特征计算余弦相似度，找到哪个文本特征和图像特征最相似，把对应的文本挑出来，这就完成了分类任务。</p>
+<p>因为文本是可以任意设计的，CLIP在使用的时候可以对任意类别进行分类。同样，图片也可以是任何数据集中的图片。这为CLIP进行zero-shot transfer提供了基础，也是clip相比以往的模型最强大的地方。</p>
+<h3 id="Why-Prompt"><a href="#Why-Prompt" class="headerlink" title="Why Prompt?"></a>Why Prompt?</h3><ul>
+<li><p>第一是因为单词有多义性，如果只用一个单词并不好，比如bus可以表示公交车，也可以表示总线</p>
+</li>
+<li><p>第二是因为在训练的时候就是用的句子，如果在推理的时候变成了一个单词，效果会有下降</p>
+</li>
+</ul>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144242199.png" alt="image-20230526144242199"></p>
+<p>论文中是使用了80个提示模板</p>
+<p>值得一提的是，在对特定的数据集，使用特定的提示模板会得到更好的效果。比如对食物的数据集，使用a kind of food进行提示，会很有用；在做 OCR 任务的时候，在想要识别的文字上打上双引号，模型也能理解这样一个意思。</p>
+<p>总之，使用Prompt方法，将label放进对应语境的句子中，可以有效提高label的表现力</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a><strong>Experiments</strong></h2><h3 id="Analysis-of-Zero-shot"><a href="#Analysis-of-Zero-shot" class="headerlink" title="Analysis of Zero-shot"></a>Analysis of Zero-shot</h3><p>作者花了十几页的篇幅讲解他们的实验，这里我选取了一些进行展示</p>
+<p>在实验之前，首介绍一下zero-shot transfer的动机</p>
+<p>预训练模型，主要是研究特征学习的能力，模型的目标是学习泛化性能好的特征，但是应用到下游任务中时，仍然需要有标签数据进行微调</p>
+<p>那么能不能训练一个模型，在应用到下游任务时无需微调呢。CLIP借助文本引导，就能很灵活的去做zero-shot transfer。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144318312.png" alt="image-20230526144318312"></p>
+<p>这张图展示了实验结果，作者在27个数据集上进行了实验</p>
+<p>比较的双方，一个是做zero-shot的CLIP,另外一个是在预训练好的ResNet50上对每个数据集做微调</p>
+<p>绿色的部分表示CLIP模型在这些数据集上表现更好，蓝色部分表示CLIP表现更差</p>
+<p>可以看到在大多数数据集上zero-shot的CLIP都超过了有监督训练好的resnet50，证实了zero-shot transfer是可以广泛应用的</p>
+<p>可以看出，对于一些普通的对物体进行分类的数据集来说，比如车子、食物这样的，CLIP一般都表现的比较好。 但是对于一些更难的数据集，比如CLEVR Counts这种给图片中的物体计数，在完全不给标签信息的情况下，对CLIP来说还是太难了。</p>
+<p>对于特别难的任务，比如给肿瘤做分类，对于我们人来说，在不学习相关知识的情况下都是非常难的。因此在这些任务上做zero-shot transfer可能并不合理。</p>
+<h3 id="Analysis-of-Few-shot"><a href="#Analysis-of-Few-shot" class="headerlink" title="Analysis of Few-shot"></a><strong>Analysis of</strong> <strong>Few-shot</strong></h3><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144455474.png" alt="image-20230526144455474"></p>
+<p>于是作者研究了CLIP在few-shot上的表现，使用的是Linear Probe，也就是冻住backbone,只训练分类头。</p>
+<p>图片的横坐标是指 数据集中每个类别里用了多少训练样本，0就表示是zero-shot</p>
+<p>纵坐标是在这些数据集上的平均准确度</p>
+<p>可以看到在few-shot上面CLIP相比其他模型都要强不少</p>
+<p>有意思的一点是CLIP在four-shot之前，few-shot的能力是比不上自己的zero-shot的</p>
+<h3 id="Analysis-of-Generalizability"><a href="#Analysis-of-Generalizability" class="headerlink" title="Analysis of Generalizability"></a><strong>Analysis of Generalizability</strong></h3><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144512020.png" alt="image-20230526144512020"></p>
+<p>然后是泛化性测试</p>
+<p>文章中使用ResNet-101为baseline，用CLIP，和它在不同的数据集上来比泛化性能。当输入数据有out of distribution时，也就是偏离分布的话，一般网络模型的性能都会变差。可以发现resnet的分数是逐渐降低的，特别是在最后面这两个，素描画和对抗样本数据集上表现非常差。而clip是比较稳定的，说明这种使用自然语言信号训练的模型，它的泛化能力，和对图像的理解能力是很强的。</p>
+<h3 id="Comparison-to-Human-Performance"><a href="#Comparison-to-Human-Performance" class="headerlink" title="Comparison to Human Performance"></a><strong>Comparison to Human Performance</strong></h3><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144533742.png" alt="image-20230526144533742"></p>
+<p>作者还将CLIP的表现与人类进行对比，得到了一个有意思的结果</p>
+<p>作者找了一群人，让他们去看宠物数据集中的测试图片。</p>
+<p>图中横坐标表示宠物的种类，纵坐标表示准确率，绿色的线表示zero-shot的人类；橙色的线表示one-shot的人类，意思就是提前给人们 每个种类 看一张图片,告诉他这个种类的宠物长什么样；蓝色的线表示zero-shot的CLIP。</p>
+<p>可以发现，对于人来说简单的类，对于CLIP来说也很简单；对于人来说难的种类，对于CLIP来说也很难，这有可能和现实中宠物种类的分布有关系。人类对于常见的宠物种类很熟悉，在CLIP的数据集中应该也出现过很多，因此准确率都很高。</p>
+<h1 id="CLIP-Related-Works"><a href="#CLIP-Related-Works" class="headerlink" title="CLIP Related Works"></a>CLIP Related Works</h1><h2 id="CLIP4Clip"><a href="#CLIP4Clip" class="headerlink" title="CLIP4Clip"></a>CLIP4Clip</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144706334.png" alt="image-20230526144706334"></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144716953.png" alt="image-20230526144716953"></p>
+<p>CLIP4Clip这篇文章是一篇实证研究的论文，内容是比较简单的</p>
+<p>CLIP模型非常适合做检索类任务，因为他就是在算图像和文本的相似性。所以很自然能想到把它扩展到视频领域，去做文本和视频的匹配。</p>
+<p>如图左边所示，文本方面和CLIP一样，直接将文本输encoder得到cls token。</p>
+<p>在视频这边，因为视频相比图像多了一个时间的维度，它是由连续的帧组成的，每一帧通过encoder都会得到一个cls token，它们是有时序性的。</p>
+<p>那么如何将一个文本特征和若干个图像特征 做相似性计算呢，这就是这篇文章所探讨的内容</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144734502.png" alt="image-20230526144734502"></p>
+<p>文章尝试了三种方法</p>
+<ul>
+<li><p>第一种方式是最简单的。它是直接将每个图像特征取平均，得到一个特征，那就和CLIP一样了。这种方法非常简单，不需要引入任何可学习的参数。但也有一个很大的局限性，它并没有考虑到图像的时序性，比如有两个打篮球的视频，第一个是人在抛球，另一个是一个人在接球。因为只是取平均，没有考虑时序特征，所以得到的结果可能是相似的，无法区分是在抛球还是在接球。</p>
+</li>
+<li><p>我们的目的是要将这若干个时序的特征融合成一个，很自然能想到使用LSTM这种时间序列模型。第二类方法也是这样做的。目前更常用的是使用Teansformer,在加上position embedding后也能够对时序进行建模。</p>
+</li>
+<li><p>在第二类方式中，是先把若干的图像特征融合成一个，再将这个融合的特征和文本特征做对比。而第三种方法，是让文本特征在最开始就参与到融合中来。具体来说，就是将文本的特征和若干图像特征一起，加上位置编码后，输入进Teansformer。这相当于把文本特征当做一个cls token。最后把这个token经过一个线性层，就得到了相似度。</p>
+</li>
+</ul>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-05-26%2014.48.00.png" alt="截屏2023-05-26 14.48.00"></p>
+<p>这是和之前的其他方法对比结果，可以看到不管是哪种特征融合方法，只要是使用CLIP，相比以往的方法都能取得很大的提升。</p>
+<p>然后是这几种特征融合方法的对比，左边的表格是在7000个视频上去微调的，右边的表格是在9000个视频上去微调的。</p>
+<p>通过左边的表格可以看到，在数据较小的情况下，直接取平均的方法是最好的，也就是说在少量数据进行微调的情况下，这种最简单的无参数的学习方式反而是最好的。</p>
+<p>只有当微调数据量增大后，后面那几种融合方式才能取得更好的效果。</p>
+<h2 id="CLIPasso"><a href="#CLIPasso" class="headerlink" title="CLIPasso"></a>CLIPasso</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144823918.png" alt="image-20230526144823918"></p>
+<p>这篇CLIPasso获得了SIGGRAPH 2022的最佳论文奖。顾名思义，CLIPasso是CLIP和毕加索两个单词的结合，是将CLIP用于素描简笔画的生成。如图所示，它是想把给定的图片，一步步变成简笔画的形式，并保留图片语义和结构上的信息。</p>
+<p>为什么作者选要结合CLIP来解决这一问题呢，主要原因有两点：</p>
+<p>第一点是为了保持语义感知</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144851184.png" alt="image-20230526144851184"></p>
+<p>这张图是毕加索的名画，一头公牛。</p>
+<p>这种简笔画，需要理解理解，和对高级概念的先验知识。对人类艺术家来说是一种挑战，对机器来说更是如此，必须保证语义上和结构上都能被识别才行。</p>
+<p>CLIP使用的是 图片和文本 的对比学习方式，它对物体是特别敏感的，能够很好地抓取物体的语义信息。作者通过实验观察到，不管图片风格如何，CLIP都能把物体的视觉特征抽取的很好，也就是非常的稳健</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144858141.png" alt="image-20230526144858141"></p>
+<p>第二点是为了摆脱有监督训练的数据集。之前的一些相关工作，都是收集特定的素描数据集进行训练。有什么数据集，就学出什么模型，抽象程度是固定的，所以最后生成的风格非常受限，这就违背了初衷。</p>
+<p>此外，素描数据集很少，学到的种类就不够丰富。比如说SketchyCOCO就只有9个类别，都是常见的动物。训练完的模型碰到这些类别之外的物体，效果并不好，还需要收集相应的数据进行微调。</p>
+<p>CLIP有出色的zero-shot transfer的能力，完全不用在下游任务上进行任何的微调</p>
+<p>基于这两点原因，就有了CLIPasso</p>
+<p>来看Clipasso的方法部分</p>
+<p>首先定义一下任务。我们的任务就是在一张白纸上，画一些贝塞尔曲线。这些贝塞尔曲线是随机初始化的，通过一系列的训练迭代，最后构成我们想要的简笔画。</p>
+<p>贝塞尔曲线 是通过一系列平面上的点 控制的曲线，模型通过更改这些点的位置，来控制贝塞尔曲线的形状。具体怎样用这些点控制贝兹曲线，这就是图形学的事情，这里就不多讨论了。</p>
+<p>下面具体介绍每个模块是怎么完成的。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144915287.png" alt="image-20230526144915287"></p>
+<p>假如现在定义了一些笔画，也就是这里的 S1 到 Sn ，将这些笔画输入进一个光栅化器，它就能将这些笔画画在画布上，变成我们能看到的图像。</p>
+<p>这一块都是图形学已有的工作，并不是文章的贡献，所以我们重点介绍其他部分。</p>
+<p>在这里，作者巧妙的使用CLIP设计了两个Loss函数。</p>
+<p>生成的简笔画有两个要求，第一个是语义和原图保持一致，比如马还是马、牛还是牛。第二个是结构上和原图保持一致，不能生成了马，但是马从站着变成趴着。在 CLIPasso 中，这两个要求分别由两个损失函数来保证，也就是语义损失Ls 和 几何距离损失Lg。</p>
+<p>先来看语义损失 Ls，相当于把CLIP当成Teacher来蒸馏这个模型。对于原始图像和后面生成的简笔画图像，如果他们描述的是同一个物体，那么经过CLIP编码后的特征都是同一语义，所以要让这两个特征尽可能的接近。</p>
+<p>只保留语义信息是不够的，还需要有几何上的一致。</p>
+<p>于是作者又设计了几何距离损失Lg。因为在模型的前几层，学习到的还是相对低级的，几何纹理上的信息，而非高层语义信息，这些是对几何位置比较敏感的。因此，可以约束这些浅层的特征，来保证原图和简笔画的轮廓更相似。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526144958313.png" alt="image-20230526144958313"></p>
+<p>此外，作者还发现，如果完全随机初始化贝塞尔曲线的话，模型会很不稳定，有的初始化后不管怎么训练效果都不好。所以需要一种更加稳定的初始化方式。</p>
+<p>作者使用了注意力机制 来解决初始化的问题。将图像输入进一个预训练好的ViT模型，对多头自注意力取加权平均得到“显著图”，再在这个显著图上进行踩点，来初始化贝塞尔曲线。这样模型的效果就稳定了许多。</p>
+<p>最后来看一下实验结果</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145014412.png" alt="image-20230526145014412"></p>
+<p>之前的方法只能对数据集中有的类别生成简笔画，而很难生成数据集以外的。借助CLIP的zero-shot能力，CLIPasso对不常见的物体也能生成简笔画，这是这个模型最突出的优势。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145020232.png" alt="image-20230526145020232"></p>
+<p>此外，通过调整初始的贝塞尔曲线的数量，可以实现不同的抽象程度</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145024589.png" alt="image-20230526145024589"></p>
+<p>和其他方法进行对比，可以看到CLIPasso的优势很明显</p>
+<h2 id="ViLD"><a href="#ViLD" class="headerlink" title="ViLD"></a>ViLD</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145035758.png" alt="image-20230526145035758"></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145039626.png" alt="image-20230526145039626"></p>
+<p>ViLD的出现是为了解决这样一个问题</p>
+<p>现在的目标检测数据集标注的类别都很有限，比如图中蓝色框中，都被识别为了玩具，toy。</p>
+<p>但存在更细致的类别，就像红色框总所写的这样，比如这里的黄鸭子，绿鳄鱼。</p>
+<p>作者希望在现有数据集的基础之上，不去进行额外地标注像是黄鸭子、绿鳄鱼这些。还能让模型具有能够检测这些物体新的类别的能力。</p>
+<p>简单来说，ViLD 想要做到的事情是：在训练时只需要训练基础类，然后通过知识蒸馏从 CLIP 模型中学习，从而在推理时 能够检测到任意的新的物体类别</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145051744.png" alt="image-20230526145051744"></p>
+<p>ViLD 的研究重点 在目标检测方法的第二个阶段，也就是得到候选检测框，proposal，之后。文章的使用CLIP思想，还是最简单的 分别抽取文本和图片特征，然后通过点积计算相似度。</p>
+<p>这里的Pre-trained ImageEncoder和Pre-trained TextEncoder是CLIP预训练得到的。权重一直是冻住的。</p>
+<p>先来看训练部分。先将 图片标注区域 的图像裁剪出来，通过预训练Image Encoder 得到标注区域的image embeddings，也就是红色部分。与此同时，通过Mask R-CNN，产生了一系列的region embeddings。也就是紫色部分。image embeddings和region embeddings需要进行知识蒸馏，这是第一个Loss函数。</p>
+<p>文本这边，我们将 基本类别，使用prompt转化成文本后，送到预训练的Text Encoder，得到text embeddings。也就是绿色部分。将紫色部分的region embeddings和绿色部分的text embeddings进行点积，这是第二个loss函数。</p>
+<p>再来看推理部分，将基本的类别和新增的类别，使用prompt转化成文本，分别输入Text Encoder产生text embeddings。这里基础类别表示为绿色，新增的类别表现为蓝色。与此同时通过Mask R-CNN，产生了一系列的region embeddings，然后将region embeddings和text embeddings进行点积，然后使用softmax归一化。取最大值的类别作为该区域的预测结果。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230526145142333.png" alt="image-20230526145142333"></p>
+<p>这里的评价指标APr是新的类别，模型没有见过，所以可以做zero-shot检测。可以看到ViLD在新增类别上的精度大幅度超过了之前的有监督的方法。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>可以看出，对CLIP的使用，大致可以分为三类</p>
+<p>第一个是最简单的情形。</p>
+<p>就是把图像或者文本，通过CLIP的预训练encoder，得到一个非常好的特征。于是将这个特征和原有的特征进行融合，或者是直接使用这个特征。CILP4clip，就是用的这个方法。</p>
+<p>第二个方法。是利用CLIP生成的特征，来作知识蒸馏，能够帮助现有模型学得更好，收敛更快。比如CLIPasso就使用到了image encoder来作知识蒸馏。</p>
+<p>第三个方法。是在第二个方式的基础上，借助对比学习的思想，设计更复杂的多模态学习方式，比如说ViLD。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><blockquote>
+<p>Radford, Alec, et al. “Learning transferable visual models from natural language supervision.” International conference on machine learning. PMLR, 2021.</p>
+<p>•Zhou, Ce, et al. “A comprehensive survey on pretrained foundation models: A history from bert to chatgpt.” arXiv preprint arXiv:2302.09419 (2023).</p>
+<p>•Gu, Xiuye, et al. “Open-vocabulary object detection via vision and language knowledge distillation.” arXiv preprint arXiv:2104.13921 (2021).</p>
+<p>•Li, Boyi, et al. “Language-driven semantic segmentation.” arXiv preprint arXiv:2201.03546 (2022).</p>
+<p>•Vinker, Yael, et al. “Clipasso: Semantically-aware object sketching.” ACM Transactions on Graphics (TOG) 41.4 (2022): 1-11.</p>
+<p>•Han, Xu, et al. “Pre-trained models: Past, present and future.” AI Open 2 (2021): 225-250.</p>
+<p>•Luo, Huaishao, et al. “CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval.” arXiv: Computer Vision and Pattern Recognition, Apr. 2021.</p>
+<p>•Luo, Huaishao, et al. “CLIP4Clip: An empirical study of CLIP for end to end video clip retrieval and captioning.” Neurocomputing 508 (2022): 293-304.</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/607106157">https://zhuanlan.zhihu.com/p/607106157</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1SL4y1s7LQ">https://www.bilibili.com/video/BV1SL4y1s7LQ</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gg411U7n4">https://www.bilibili.com/video/BV1gg411U7n4</a></p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/05/10/CLIP/">http://example.com/2023/05/10/CLIP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">归纳总结</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/12/diffusion/"><img class="prev-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-05-26%2015.02.42.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">万字解读~~~扩散模型和跨模态生成(内含数学推导)</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/06/lqb66666/"><img class="next-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/23C48937-C240-466B-9F28-775C6F6CF414_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">python算法复习笔记5(DP,数学)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/09/6DPose-1/" title="6D姿态估计-笔记1"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-09</div><div class="title">6D姿态估计-笔记1</div></div></a></div><div><a href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/9F442EA0-F893-45C6-8967-10A3799F6DFC.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记1 —— BERT</div></div></a></div><div><a href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记2 —— VIT</div></div></a></div><div><a href="/2023/02/01/SAR%20Change%20Detection/" title="SAR图像变化检测深度学习研究方法"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-01</div><div class="title">SAR图像变化检测深度学习研究方法</div></div></a></div><div><a href="/2022/09/30/Transformer3/" title="Transformer笔记3——SwinTransformer"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">Transformer笔记3——SwinTransformer</div></div></a></div><div><a href="/2022/11/23/detection/" title="目标检测相关摘录"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/628FBB49-B697-4165-8B49-A59144FB233F_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-23</div><div class="title">目标检测相关摘录</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#The-application-of-large-scale-pre-trained-models-in-visual-understanding%E2%80%94the-case-of-CLIP"><span class="toc-number">1.</span> <span class="toc-text">The application of large-scale pre-trained models in visual understanding—the case of CLIP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Background-of-Pre-trained-mode"><span class="toc-number">2.</span> <span class="toc-text">Background of Pre-trained mode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CLIP"><span class="toc-number">3.</span> <span class="toc-text">CLIP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Shot-Learning"><span class="toc-number">3.1.</span> <span class="toc-text">Zero-Shot Learning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Background-of-CLIP"><span class="toc-number">3.2.</span> <span class="toc-text">Background of CLIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach"><span class="toc-number">3.3.</span> <span class="toc-text">Approach</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pre-train"><span class="toc-number">3.3.1.</span> <span class="toc-text">Pre-train</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-use-contrastive-learning"><span class="toc-number">3.3.2.</span> <span class="toc-text">Why use contrastive learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zero-shot-Prediction"><span class="toc-number">3.3.3.</span> <span class="toc-text">Zero-shot Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Prompt"><span class="toc-number">3.3.4.</span> <span class="toc-text">Why Prompt?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiments"><span class="toc-number">3.4.</span> <span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-Zero-shot"><span class="toc-number">3.4.1.</span> <span class="toc-text">Analysis of Zero-shot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-Few-shot"><span class="toc-number">3.4.2.</span> <span class="toc-text">Analysis of Few-shot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-Generalizability"><span class="toc-number">3.4.3.</span> <span class="toc-text">Analysis of Generalizability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-to-Human-Performance"><span class="toc-number">3.4.4.</span> <span class="toc-text">Comparison to Human Performance</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CLIP-Related-Works"><span class="toc-number">4.</span> <span class="toc-text">CLIP Related Works</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CLIP4Clip"><span class="toc-number">4.1.</span> <span class="toc-text">CLIP4Clip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CLIPasso"><span class="toc-number">4.2.</span> <span class="toc-text">CLIPasso</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViLD"><span class="toc-number">4.3.</span> <span class="toc-text">ViLD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#References"><span class="toc-number">6.</span> <span class="toc-text">References</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/12/diffusion/" title="万字解读~~~扩散模型和跨模态生成(内含数学推导)"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-05-26%2015.02.42.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="万字解读~~~扩散模型和跨模态生成(内含数学推导)"/></a><div class="content"><a class="title" href="/2023/05/12/diffusion/" title="万字解读~~~扩散模型和跨模态生成(内含数学推导)">万字解读~~~扩散模型和跨模态生成(内含数学推导)</a><time datetime="2023-05-12T14:56:11.000Z" title="发表于 2023-05-12 22:56:11">2023-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/10/CLIP/" title="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例"/></a><div class="content"><a class="title" href="/2023/05/10/CLIP/" title="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例">万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例</a><time datetime="2023-05-10T14:56:11.000Z" title="发表于 2023-05-10 22:56:11">2023-05-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/06/lqb66666/" title="python算法复习笔记5(DP,数学)"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/23C48937-C240-466B-9F28-775C6F6CF414_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python算法复习笔记5(DP,数学)"/></a><div class="content"><a class="title" href="/2023/04/06/lqb66666/" title="python算法复习笔记5(DP,数学)">python算法复习笔记5(DP,数学)</a><time datetime="2023-04-06T11:57:54.000Z" title="发表于 2023-04-06 19:57:54">2023-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/31/lqb6666/" title="python算法复习笔记4(树状数组，线段树，矩阵乘法，st表)"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/23C48937-C240-466B-9F28-775C6F6CF414_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python算法复习笔记4(树状数组，线段树，矩阵乘法，st表)"/></a><div class="content"><a class="title" href="/2023/03/31/lqb6666/" title="python算法复习笔记4(树状数组，线段树，矩阵乘法，st表)">python算法复习笔记4(树状数组，线段树，矩阵乘法，st表)</a><time datetime="2023-03-31T11:57:54.000Z" title="发表于 2023-03-31 19:57:54">2023-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/30/lqb666/" title="python算法复习笔记3(拓扑序，Dijkstra，SPFA，最小生成树，LCA，二分图)"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/23C48937-C240-466B-9F28-775C6F6CF414_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python算法复习笔记3(拓扑序，Dijkstra，SPFA，最小生成树，LCA，二分图)"/></a><div class="content"><a class="title" href="/2023/03/30/lqb666/" title="python算法复习笔记3(拓扑序，Dijkstra，SPFA，最小生成树，LCA，二分图)">python算法复习笔记3(拓扑序，Dijkstra，SPFA，最小生成树，LCA，二分图)</a><time datetime="2023-03-30T11:57:54.000Z" title="发表于 2023-03-30 19:57:54">2023-03-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
