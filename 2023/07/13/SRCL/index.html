@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation | 魔法使いの秘密基地</title><meta name="keywords" content="归纳总结"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="论文研究背景、动机与主要贡献研究背景及动机这篇论文的研究背景聚焦视觉语言预训练（Vision Language Pretraining，VLP）。VLP通过结合处理视觉和语言信息来学习跨模态的表示。最近，基于大规模预训练的视觉语言模型在不少任务中都取得了很好的效果，如图像标注、视觉问答和视觉推理等。传统的VLP方法通常依赖对比学习，这种方法通过最大化正样本，并最小化负样本之间的相似性来学习跨模态表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation">
+<meta property="og:url" content="http://example.com/2023/07/13/SRCL/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="论文研究背景、动机与主要贡献研究背景及动机这篇论文的研究背景聚焦视觉语言预训练（Vision Language Pretraining，VLP）。VLP通过结合处理视觉和语言信息来学习跨模态的表示。最近，基于大规模预训练的视觉语言模型在不少任务中都取得了很好的效果，如图像标注、视觉问答和视觉推理等。传统的VLP方法通常依赖对比学习，这种方法通过最大化正样本，并最小化负样本之间的相似性来学习跨模态表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg">
+<meta property="article:published_time" content="2023-07-13T04:56:11.000Z">
+<meta property="article:modified_time" content="2023-07-13T10:34:22.289Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="归纳总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2023/07/13/SRCL/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-13 18:34:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-13T04:56:11.000Z" title="发表于 2023-07-13 12:56:11">2023-07-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-13T10:34:22.289Z" title="更新于 2023-07-13 18:34:22">2023-07-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="论文研究背景、动机与主要贡献"><a href="#论文研究背景、动机与主要贡献" class="headerlink" title="论文研究背景、动机与主要贡献"></a>论文研究背景、动机与主要贡献</h1><h2 id="研究背景及动机"><a href="#研究背景及动机" class="headerlink" title="研究背景及动机"></a>研究背景及动机</h2><p>这篇论文的研究背景聚焦视觉语言预训练（Vision Language Pretraining，VLP）。VLP通过结合处理视觉和语言信息来学习跨模态的表示。最近，基于大规模预训练的视觉语言模型在不少任务中都取得了很好的效果，如图像标注、视觉问答和视觉推理等。传统的VLP方法通常依赖对比学习，这种方法通过最大化正样本，并最小化负样本之间的相似性来学习跨模态表示。然而这种方法难以效地处理“假负样本(False Negatives)”。如图1所示，图像和文本之间存在多对多对应关系，如I4和I5被标记为负样本，但它们其实也符合或部分符合“A big bird in the tree”的描述。这些假阴性样本的存在显然会对模型效果产生负面影响。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230713182725335.png" alt="image-20230713182725335"></p>
+<p>图1 文本和图像存在多对多的关系</p>
+<p>论文的主要动机就是解决这个问题。作者从互信息(Mutual Information，MI)优化的角度，通过调节跨模态的相似性来优化对比学习。通过研究过去的InfoNCE loss是怎样最大化MI的，作者发现，优化InfoNCE相当于最大化正样本和锚点（当前的正样本文本）之间的MI-P与负样本和锚点之间的MI-N的差值的下界。也就是说即使一些负样本在语义上与锚点匹配，MI-N也会被最小化。</p>
+<p>受此启发，作者为每个负样本引入了一个对比权重，这个权重与负样本与锚点的跨模态相似性成反比，并随着训练逐步变化。通过这种方式，可以防止MI-N被最小化，False Negatives的对比效果会被减弱，从而减少它们对学习表示的负面影响。</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>\1)   作者从MI优化的角度，推导出了InfoNCE loss的MI下界的一般形式。发现了假阴性和锚点之间的MI会被错误最小化的问题。</p>
+<p>\2)   基于这个推导。作者提出了一种新的跨模态对比学习方法SRCL(Similarity Regulated Contrastive Learning) 通过引入一个新的对比权重，使得模型能够根据样本之间的跨模态相似性动态地调整对比权重，从而有效地解决了上述问题。</p>
+<p>\3)   在各种下游任务上，如Zero-shot跨模态检索和视觉问答，论文的方法都明显优于现有SOTA模型。作者还通过实验证明了其在处理大规模数据时的优势。</p>
+<h1 id="论文问题描述或定义"><a href="#论文问题描述或定义" class="headerlink" title="论文问题描述或定义"></a>论文问题描述或定义</h1><p>在VLP中，模型通常会接收到一对图像和文本作为输入，然后通过对比学习的方式进行训练。目标是让模型能够将相似的图像和文本对靠近，将不相似的图像和文本对远离。但这种方法存在假阴性问题，那些实际上是相似的图像和文本对，可能被模型错误地认为是不相似的。因此作者从MI优化的角度，通过调节跨模态的相似性来优化对比学习。MI是一种度量两个随机变量之间相互依赖程度的方法，可用来评估两个随机变量之间的信息共享量。</p>
+<p>作者推导出了InfoNCE Loss的MI下界的更一般形式:</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-07-13%2018.29.01.png" alt="截屏2023-07-13 18.29.01" style="zoom:50%;" /></p>
+<p>该式假设负样本和锚点是独立的，但当存在不可忽略的假阴性时，负样本和锚点可能并不独立。当存在不可忽略的假阴性，重新推导可得出更一般的结论。等式左边的第一项是锚点和正样本之间的MI，第二项是锚点和负样本之间的MI期望。这表明优化InfoNCE等价于最大化前者和后者之间差的下界。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-07-13%2018.29.35.png" alt="截屏2023-07-13 18.29.35" style="zoom:50%;" /></p>
+<h1 id="论文提出的新思路、新理论、或新方法"><a href="#论文提出的新思路、新理论、或新方法" class="headerlink" title="论文提出的新思路、新理论、或新方法"></a>论文提出的新思路、新理论、或新方法</h1><p>模型的pipeline如下图所示。通过阅读论文附录可知，ImageEncoder是使用CLIP中预训练的ImageEncoder(ViT-B/16)进行初始化的，TextEncoder和Crossmodal fusion network中使用的是6层的Transformer。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230713183007304.png" alt="image-20230713183007304"></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-07-13%2018.30.19.png" alt="截屏2023-07-13 18.30.19" style="zoom:50%;" /></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-07-13%2018.30.35.png" alt="截屏2023-07-13 18.30.35"></p>
+<p>那么如何计算对比学习中负样本的调节权值呢？核心思想是调节权重与锚点和负样本之间的语义相似性成反比。因此先要计算语义相似性。虽然VLP模型可以用来衡量跨模态的语义相似性，但在早期的训练阶段的VLP效果并不好。</p>
+<p>因此作者先训练了另一个模型Hβ，与VLP模型Sγ具有相同的结构，使用InfoNCE Loss训练，用于在早期预阶段估计图像文本对的语义相似性。将Sγ和Hβ计算得出的相似度加权平均就得到了最终锚点和负样本之间的语义相似度。</p>
+<p>加权系数的计算规则是：训练开始时，Sγ的权重设为0，Hβ的权重设为1，随着周期增加，Sγ权重逐渐增加，Hβ的权重逐渐减小。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-07-13%2018.31.44.png" alt="截屏2023-07-13 18.31.44" style="zoom:50%;" /></p>
+<p>上述方法通过计算语义相似性，然后根据相似性计算对比权重，实现了对负样本的有效调节。这样做是为了根据负样本与锚点的语义相似性动态调整负样本的权重，从而使对比学习更加有效。</p>
+<h1 id="论文方法的理论分析或实验评估方法与效果"><a href="#论文方法的理论分析或实验评估方法与效果" class="headerlink" title="论文方法的理论分析或实验评估方法与效果"></a>论文方法的理论分析或实验评估方法与效果</h1><p>实验部分，基于ALBEF框架在Conceptual Captions、SBU Captions、MSCOCO、Visual Genome四个数据集进行预训练。</p>
+<p>文章在四个下游任务上进行了定量评估，包括：图像文本检索，Zero-shot图像文本检索，视觉问答和用于视觉推理的自然语言（natural language for visual reasoning）。图像文本检索方面，在MSCOCO和Flickr30K数据集上进行TR和IR的实验。微调过程中同时优化了SRCL loss和ITM loss。视觉问题回答方面，文章将其当做答案生成任务，并使用了受限的近似词生成模型。视觉推理的自然语言方面，该任务要求预测一个句子是否描述了一对图像，其实就是一个二分类任务。Zero-shot图像文本检索是在Flickr30K进行实验的。在这四个下游任务上的结果，都说明了将SRCL引入ALBEF可以显著提高性能。</p>
+<p>此外文章还探讨了“False Negatives”与“Hard Negatives”。这里说的Hard Negatives是指那些被错误分类成正样本的负样本，它和False Negatives边界的模糊的。这里存在一个悖论：一方面我们希望减少False Negatives的影响，这些False Negatives中包含了一定的Hard Negatives，另一方面大家都在尝试通过增加Hard Negatives来提高学习效果。</p>
+<p>作者设计实验探究了这个问题，他们调整了False Negatives(包含一定的Hard Negatives)的比例。发现当移除部分False Negatives时，模型的性能会有所提升，但如果移除过多，模型的性能又会下降。这也印证了论文方法的优越性，通过跨模态相似性调节能更好地平衡False Negatives带来的好处和坏处，从而提高模型的性能。此外作者还通过实验证明了其在处理大规模数据时的优势。</p>
+<p>对Zero-shot文本图像检索结果进行定性分析的如下图所示。文本为“a woman with blond hair is sitting in a booth with a drink working on her laptop”，可以看到ALBEF过于关注“a woman with blond hair”，但忽视了关键信息“working on her laptop”。 这表明文章的方法能全面地捕捉相似性。并且结果排名能反映出从完全对齐到部分对齐的趋势。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20230713183220715.png" alt="image-20230713183220715"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文主要贡献有两个，一是从MI优化的角度，推导出了InfoNCE loss的MI下界的一般形式，发现了假阴性和锚点之间的MI会被错误最小化的问题；二是基于这个推导，提出了一种新的跨模态对比学习方法SRCL。作者通过大量的实验说明了该方法的有效性，并发现平衡False Negatives对于学习跨模态表示的重要性。</p>
+<p>论文的主要优点是：1、理论分析与相关推导较为详细，这为理解和使用本文的方法提供了有力的理论支持。2、SRCL的具体实现很简单，但是非常有效。也比较容易地添加到其他的基于对比学习模型中。</p>
+<p>但也有一些不足：虽然论文的方法在他们的实验中表现优秀，但都是基于一个Baseline: ALBEF来验证的。如果能将其应用到其他的VLP中，实验结果会更有说服力。此外关于False Negatives与Hard Negatives的讨论不够深入，值得进一步的探究。</p>
+<p>论文带给我的启示是做研究可以从问题的“痛点”下手。在跨模态对比学习中，False Negatives会对模型的性能产生负面影响，如何有效地处理False Negatives是一个重要的问题。为此作者提出了相似调节对比学习SRCL，通过引入一个新的对比权重，使得模型能够根据样本之间的跨模态相似性动态地调整对比权重，从而有效地解决了这个问题。此外，严谨的数学和理论推导也是非常重要的，它能帮助我们更好的发现和理解这些“痛点”，也能为论文提供有力的理论支撑。</p>
+<p>对于后续的研究，我认为可以从以下几个方面探索。</p>
+<p>1、尝试将这种方法应用到其他的VLP，或其他的跨模态任务中，比如音频和文本的对比学习，看看是否能得到类似的结果。</p>
+<p>2、本文为每个负样本引入了一个对比权重，通过优化对比权重可以更好地处理假负样本的问题。可以设计出一种新的对比权重，来更好地解决这个问题，比如参考信息瓶颈对比学习的思想。</p>
+<p>3、可以尝试针对False Negatives做一些数据预处理（比如mask掉一些特定的词汇）；也可以尝试结合生成式模型，来生成更多的负样本，从而提高模型的鲁棒性；以及对multi-modal encoder的架构进行改进等等。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/07/13/SRCL/">http://example.com/2023/07/13/SRCL/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">归纳总结</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/27/QD-DETR.md/"><img class="next-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/412C1CBF-59A3-49FE-88AC-6157AA95C616_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/09/6DPose-1/" title="6D姿态估计-笔记1"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-09</div><div class="title">6D姿态估计-笔记1</div></div></a></div><div><a href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/9F442EA0-F893-45C6-8967-10A3799F6DFC.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记1 —— BERT</div></div></a></div><div><a href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记2 —— VIT</div></div></a></div><div><a href="/2023/02/01/SAR%20Change%20Detection/" title="SAR图像变化检测深度学习研究方法"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-01</div><div class="title">SAR图像变化检测深度学习研究方法</div></div></a></div><div><a href="/2022/09/30/Transformer3/" title="Transformer笔记3——SwinTransformer"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">Transformer笔记3——SwinTransformer</div></div></a></div><div><a href="/2022/11/23/detection/" title="目标检测相关摘录"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/628FBB49-B697-4165-8B49-A59144FB233F_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-23</div><div class="title">目标检测相关摘录</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E3%80%81%E5%8A%A8%E6%9C%BA%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.</span> <span class="toc-text">论文研究背景、动机与主要贡献</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E5%8F%8A%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">研究背景及动机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.2.</span> <span class="toc-text">主要贡献</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0%E6%88%96%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">论文问题描述或定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E6%8F%90%E5%87%BA%E7%9A%84%E6%96%B0%E6%80%9D%E8%B7%AF%E3%80%81%E6%96%B0%E7%90%86%E8%AE%BA%E3%80%81%E6%88%96%E6%96%B0%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">论文提出的新思路、新理论、或新方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E6%96%B9%E6%B3%95%E7%9A%84%E7%90%86%E8%AE%BA%E5%88%86%E6%9E%90%E6%88%96%E5%AE%9E%E9%AA%8C%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95%E4%B8%8E%E6%95%88%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">论文方法的理论分析或实验评估方法与效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/07/13/SRCL/" title="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation"/></a><div class="content"><a class="title" href="/2023/07/13/SRCL/" title="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation">ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation</a><time datetime="2023-07-13T04:56:11.000Z" title="发表于 2023-07-13 12:56:11">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/27/QD-DETR.md/" title="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/412C1CBF-59A3-49FE-88AC-6157AA95C616_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection"/></a><div class="content"><a class="title" href="/2023/05/27/QD-DETR.md/" title="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection">CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection</a><time datetime="2023-05-27T14:56:12.000Z" title="发表于 2023-05-27 22:56:12">2023-05-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/27/VDI/" title="CVPR 2023-Towards Generalisable Video Moment Retrieval:Visual-Dynamic Injection to Image-Text Pre-Training"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/2BFB88C0-7BD6-4523-8387-8CAFF7EACECA_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVPR 2023-Towards Generalisable Video Moment Retrieval:Visual-Dynamic Injection to Image-Text Pre-Training"/></a><div class="content"><a class="title" href="/2023/05/27/VDI/" title="CVPR 2023-Towards Generalisable Video Moment Retrieval:Visual-Dynamic Injection to Image-Text Pre-Training">CVPR 2023-Towards Generalisable Video Moment Retrieval:Visual-Dynamic Injection to Image-Text Pre-Training</a><time datetime="2023-05-27T14:56:11.000Z" title="发表于 2023-05-27 22:56:11">2023-05-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/12/diffusion/" title="万字解读~~~扩散模型和跨模态生成(内含数学推导)"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-05-26%2015.02.42.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="万字解读~~~扩散模型和跨模态生成(内含数学推导)"/></a><div class="content"><a class="title" href="/2023/05/12/diffusion/" title="万字解读~~~扩散模型和跨模态生成(内含数学推导)">万字解读~~~扩散模型和跨模态生成(内含数学推导)</a><time datetime="2023-05-12T14:56:11.000Z" title="发表于 2023-05-12 22:56:11">2023-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/10/CLIP/" title="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9AF49B6-C7E1-43E6-9E62-7394CA513346.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例"/></a><div class="content"><a class="title" href="/2023/05/10/CLIP/" title="万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例">万字解读~~~大规模预训练模型在视觉理解中的应用——以CLIP为例</a><time datetime="2023-05-10T14:56:11.000Z" title="发表于 2023-05-10 22:56:11">2023-05-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
