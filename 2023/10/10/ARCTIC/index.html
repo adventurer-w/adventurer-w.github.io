@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记 | 魔法使いの秘密基地</title><meta name="keywords" content="归纳总结"><meta name="author" content="adventurer-w"><meta name="copyright" content="adventurer-w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[toc] 论文研究背景、动机与主要贡献研究背景及动机人类本能地理解，无生命的物体不会自己移动，但状态的变化通常是由人类操纵引起的(例如，打开一本书)。对于机器来说，情况还不是这样。在某种程度上，这是因为没有数据集具有真实的3D注释，用于研究手部和关节物体的物理一致和同步运动。 论文介绍了一个名为ARCTIC的数据集，旨在研究灵巧的双手物体操作。 1. 人-物交互数据集的需求： 随着计算机视觉和机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记">
+<meta property="og:url" content="http://example.com/2023/10/10/ARCTIC/index.html">
+<meta property="og:site_name" content="魔法使いの秘密基地">
+<meta property="og:description" content="[toc] 论文研究背景、动机与主要贡献研究背景及动机人类本能地理解，无生命的物体不会自己移动，但状态的变化通常是由人类操纵引起的(例如，打开一本书)。对于机器来说，情况还不是这样。在某种程度上，这是因为没有数据集具有真实的3D注释，用于研究手部和关节物体的物理一致和同步运动。 论文介绍了一个名为ARCTIC的数据集，旨在研究灵巧的双手物体操作。 1. 人-物交互数据集的需求： 随着计算机视觉和机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg">
+<meta property="article:published_time" content="2023-10-10T04:56:11.000Z">
+<meta property="article:modified_time" content="2023-10-13T15:30:40.044Z">
+<meta property="article:author" content="adventurer-w">
+<meta property="article:tag" content="归纳总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg"><link rel="shortcut icon" href="/favicon.png"><link rel="canonical" href="http://example.com/2023/10/10/ARCTIC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-13 23:30:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">魔法使いの秘密基地</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/bilibili/"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-10T04:56:11.000Z" title="发表于 2023-10-10 12:56:11">2023-10-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-13T15:30:40.044Z" title="更新于 2023-10-13 23:30:40">2023-10-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[toc]</p>
+<h1 id="论文研究背景、动机与主要贡献"><a href="#论文研究背景、动机与主要贡献" class="headerlink" title="论文研究背景、动机与主要贡献"></a>论文研究背景、动机与主要贡献</h1><h2 id="研究背景及动机"><a href="#研究背景及动机" class="headerlink" title="研究背景及动机"></a>研究背景及动机</h2><p>人类本能地理解，无生命的物体不会自己移动，但状态的变化通常是由人类操纵引起的(例如，打开一本书)。对于机器来说，情况还不是这样。在某种程度上，这是因为没有数据集具有真实的3D注释，用于研究手部和关节物体的物理一致和同步运动。</p>
+<p>论文介绍了一个名为ARCTIC的数据集，旨在研究灵巧的双手物体操作。</p>
+<p><strong>1. 人-物交互数据集的需求：</strong> 随着计算机视觉和机器学习技术的发展，对于能够理解和模拟人与物体之间复杂交互的数据集的需求日益增加。尤其是双手与物体之间的交互，这种交互在日常生活中非常常见，但在现有的数据集中很少被深入研究。</p>
+<p><strong>2. 3D手和物体重建的挑战：</strong> 从单目视频中重建3D手和物体的运动是一个具有挑战性的任务。现有的方法和数据集往往只关注手或物体的单独重建，而忽略了它们之间的交互。</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><h3 id="1-ARCTIC数据集的推出："><a href="#1-ARCTIC数据集的推出：" class="headerlink" title="1. ARCTIC数据集的推出："></a>1. ARCTIC数据集的推出：</h3><ul>
+<li><p><strong>数据内容</strong>：ARCTIC数据集包含了手操作关节物体的视频，这些视频不仅捕捉了双手与物体之间的复杂交互，还提供了精确的3D手和物体网格以及详细的接触信息。这些信息对于理解和模拟双手与物体之间的交互至关重要。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-10-10%2013.57.58.png" alt="截屏2023-10-10 13.57.58"></p>
+</li>
+</ul>
+<h3 id="2-提出两个新颖的任务："><a href="#2-提出两个新颖的任务：" class="headerlink" title="2. 提出两个新颖的任务："></a>2. 提出两个新颖的任务：</h3><ul>
+<li><strong>一致性运动重建</strong>：这是一个旨在从单目视频中重建手和物体的3D运动的任务。与传统的3D重建任务不同，这个任务强调了手和物体之间交互的一致性，确保重建的运动与实际观察到的视频中的运动相匹配。</li>
+<li><strong>交互场估计</strong>：这是一个涉及从图像中估计手和物体之间的相对距离的任务。这个任务的目标是理解手和物体之间的空间关系，从而更好地模拟它们之间的交互。</li>
+</ul>
+<h3 id="3-对相关工作的讨论："><a href="#3-对相关工作的讨论：" class="headerlink" title="3. 对相关工作的讨论："></a>3. 对相关工作的讨论：</h3><ul>
+<li>论文还讨论了与人-物数据集和3D手和物体重建相关的工作。这部分内容不仅为读者提供了背景知识，还强调了ARCTIC相对于其他数据集和方法的独特贡献。</li>
+</ul>
+<h1 id="一致性运动重建"><a href="#一致性运动重建" class="headerlink" title="一致性运动重建"></a>一致性运动重建</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>给定一个视频，目标是为每一帧重建主体的双手和一个关节物体的3D运动。重点是要求重建的手-物体网格在物体的关节和操作过程中具有时间上一致的手-物体接触和运动。</p>
+<p><strong>参数模型</strong>：</p>
+<ul>
+<li>使用  l 、 r  和 o 分别表示左手、右手和物体。</li>
+<li>对于手部，使用MANO模型来表示手部姿势和形状，由  $\Theta = \{\theta, \beta\}$  表示，其中 $ \theta$  是姿势参数， $\beta$  是形状参数。MANO模型将  $\Theta$  映射到一个形状和姿势的3D网格  $H(\theta, \beta)$ 。它由48维的姿态（具有全局方向）和10维的形状的参数组成。3维 J 的3D关节位置使用预先训练的线性回归器W获得。MANO模型将手映射到一个形状和姿态的778x3的三维网格H。</li>
+<li>对于每个物体对象，我们使用扫描对象网格、估计的旋转轴和估计的标记顶点对应构建一个三维模型O。物体姿态7维Ω，包括关节的1D旋转（弧度）1维ω，和6D物体刚性姿态，即其旋转3维R0，和平移3维T0。以铰接的对象姿态Ω作为输入，并输出一个姿态的三维网格O(Ω)（维度为Vx3），其中V表示对象的顶点数。对象解码器预测对象旋转、相机参数和对象清晰度。</li>
+</ul>
+<h2 id="评价指标："><a href="#评价指标：" class="headerlink" title="评价指标："></a><strong>评价指标</strong>：</h2><h3 id="接触和相对位置"><a href="#接触和相对位置" class="headerlink" title="接触和相对位置"></a><strong>接触和相对位置</strong></h3><ol>
+<li><p><strong>接触偏差 (CDev)</strong>：<br>对于一帧，假设有  C  对接触的手-物体顶点  $\{(h_i, o_i)\}^C_{i=1} $，以及相应的预测 $\{(\hat{h}_i, \hat{o}_i)\}^C_{i=1} $。CDev定义为 $\hat{h}_i $ 和 $\hat{o}_i$ 之间的平均距离，越小越好</p>
+<p>$CDev = \frac{1}{C} \sum^C_{i=1} ||\hat{h}_i - \hat{o}_i|| $</p>
+</li>
+<li><p><strong>Mean Relative-Root Position Error (MRRPE)</strong>:</p>
+<ul>
+<li><strong>定义</strong>用于衡手或物体之间的<strong>相对根部平移</strong>。</li>
+<li><strong>计算</strong>：对于两个实体a和b，计算地面真实的根部位置与预测的根部位置之间的L2距离。<br>$MRRPE_{a \to b} = || (J_{a0} - J_{b0}) - (\hat{J}_{a0} - \hat{J}_{b0}) ||_2$<br>其中，$J_{a0} 和 J_{b0}$分别是实体a和b的GT的根部位置，$\hat{J}_{a0}和 \hat{J}_{b0} $ 分别是实体a和b的预测的根部位置。</li>
+</ul>
+</li>
+</ol>
+<h3 id="运动"><a href="#运动" class="headerlink" title="运动"></a><strong>运动</strong></h3><ol>
+<li><p><strong>运动偏差 (MDev)</strong>：<br>给定一个手和物体的地面真实序列，我们使用  $ht_i$  和  $ot_j$  分别表示手的顶点  i  和物体的顶点  j 。当两个手-物体顶点  $ht_i$  和  $ot_j$  在一个窗口内稳定接触时，它们应该在连续帧中朝同一方向移动。为了衡量这一点，我们定义了预测的手-物体序列  $\hat{h}$  和  $\hat{o}$  的元组  $(i, j, m, n)$  的运动偏差为： </p>
+<p>$MDev = \frac{1}{n-m} \sum^n_{t=m+1} ||\delta\hat{h}_i - \delta\hat{o}_j||$  其中，$\delta\hat{h}_i = \hat{h}_i - \hat{h}_{i-1} $ 和  $\delta\hat{o}_j = \hat{o}_j - \hat{o}_{j-1}$。</p>
+</li>
+<li><p><strong>加速度误差 (ACC)</strong>：<br>为了衡量重建的平滑性，我们报告加速度误差，计算为地面真实和预测顶点序列之间的加速度差异。</p>
+</li>
+</ol>
+<h3 id="手"><a href="#手" class="headerlink" title="手"></a><strong>手</strong></h3><ol>
+<li><strong>Mean Per-Joint Position Error (MPJPE)</strong>:<ul>
+<li><strong>计算</strong>：对于每只手，计算21个预测关节与地面真实关节之间的L2距离，然后减去其根部位置。</li>
+<li>$MPJPE = \frac{1}{N} \sum_{i=1}^{N} || p_i - \hat{p}_i ||_2 $<br>其中，( $p_i$ ) 是GT的第i个关节位置，( $\hat{p}_i$ ) 是预测的第i个关节位置，N是关节的数量（例如，对于手部，N=21）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="物体"><a href="#物体" class="headerlink" title="物体"></a><strong>物体</strong></h3><p><strong>Average Articulation Error (AAE)</strong>:</p>
+<ul>
+<li><strong>计算</strong>：对于每一帧，计算预测的关节角度与GT关节角度之间的绝对误差，然后取所有帧的平均值。</li>
+<li>$ AAE = \frac{1}{T} \sum_{t=1}^{T} | \omega_t - \hat{\omega}_t |$<br>其中，( $\omega_t $) 是在帧t的地面真实的关节角度，( $\hat{\omega}_t$ ) 是在帧t的预测的关节角度，T是帧的数量。</li>
+</ul>
+<p><strong>Success Rate</strong>:</p>
+<ul>
+<li><strong>定义</strong>：为了衡量物体重建的质量，使用一个与物体大小无关的成功率指标。</li>
+<li><strong>计算</strong>：计算预测的物体顶点与GT顶点之间的L2误差小于物体直径5%的顶点的百分比。</li>
+<li>$\text{Success Rate} = \frac{1}{V_o} \sum_{i=1}^{V_o} 1(|| o_i - \hat{o}_i ||_2 &lt; 0.05D) \times 100\%$<br>其中，( $o_i$ ) 是地面真实的第i个物体顶点，( $\hat{o}i$ ) 是预测的第i个物体顶点，( $V_o$ ) 是物体顶点的数量，D是物体的直径，1(·)是指示函数，当括号内的条件为真时值为1，否则为0。</li>
+</ul>
+<h2 id="模型-ArcticNet"><a href="#模型-ArcticNet" class="headerlink" title="模型 ArcticNet"></a>模型 ArcticNet</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-10-11%2021.19.22.png" alt="截屏2023-10-11 21.19.22"></p>
+<p>两个模型：单帧模型(ArcticNet- sf)、循环架构模型(ArcticNet- lstm)</p>
+<p>使用在ImageNet上预训练的ResNet-50主干。模型使用Adam优化器进行训练，学习率为1e−5。为了提高可见度，在物体中心的正方形区域周围裁剪每个图像，并将图像大小调整为224 × 224。数据增强:旋转(±30◦)，缩放(±25%)和颜色抖动(±40%)。</p>
+<p><strong>ArcticNet- sf</strong></p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/image-20231011203026385.png" alt="image-20231011203026385"></p>
+<p>相机参数：焦距、旋转和平移。用于将3D模型投影到2D图像上，从而可以与实际的2D图像进行比较和对齐。</p>
+<p><strong>物体七维度姿态怎么来？</strong></p>
+<p>1D关节旋转+3维旋转R+3维平移T</p>
+<p>其中关节旋转对应附录Table 4 物体分支中的16行 (这个预测的好像不是物体清晰度)，3维旋转R对应14行。</p>
+<p>在附录3.1 Camera model中介绍了使用相机参数(s, tx, ty )，得到手和物体的3维平移T的公式。</p>
+<p><strong>对象解码器预测的东西有啥用？</strong></p>
+<p>对象解码器（object decoder）应该是指附录Table 4的Object Branch，可以得到物体的七个维度。 </p>
+<p><strong>The 3D joint locations J是什么</strong></p>
+<p>“The 3D joint locationsJ = WH ∈ IRJ×3 are obtained using a pre-trained linear regressor W .”</p>
+<p>结合上下文，H是指指将Θ = {θ, β}输入到MANO后的3D网格H(Θ， β)∈IR778×3</p>
+<p>手的三维J（The 3D joint locations）就是H左乘一个W(线性回归量)，应该就是我们最后想得到的手的三维空间位置。</p>
+<h1 id="相互作用场估计"><a href="#相互作用场估计" class="headerlink" title="相互作用场估计"></a>相互作用场估计</h1><h2 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-10-11%2021.23.32.png" alt="截屏2023-10-11 21.23.32"></p>
+<h2 id="InterField"><a href="#InterField" class="headerlink" title="InterField"></a>InterField</h2><p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-10-11%2021.20.14.png" alt="截屏2023-10-11 21.20.14"></p>
+<p>首先通过CNN主干提取图像特征X。接下来，我们将X连接到左手(l)的每个次采样顶点，以获得所有pi= [x; vi ] ，其中vi表示次采样顶点的数量。所有的点pi都被输入一个PointNet，然后是一个估计距离的回归头。预测的距离被上采样到全网格（778）。</p>
+<p>为了提高效率，我们对PointNet使用下采样顶点到较低维度，并使用上采样进行回归。其余的交互场是通过相同的网络估计与一个共享参数的CNN和pointNet，但不同的头。</p>
+<p><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/%E6%88%AA%E5%B1%8F2023-10-11%2021.42.07.png" alt="截屏2023-10-11 21.42.07"></p>
+<ol>
+<li><strong>图像特征提取</strong>：从输入图像中，我们使用图像骨干网络获得一个2048维的图像特征向量。</li>
+<li><strong>特征降维</strong>：该向量通过一个多层感知机(MLP)并被投影到较低的维度以提高计算效率（Line 1-4）。</li>
+<li><strong>点云构建</strong>：我们使用手的子采样顶点，并将每个顶点的3D位置与512维的图像特征向量连接，得到一个具有515维的点云。这个点云通过PointNet骨干网络，得到一个512维的潜在点云（Line 5-11）。</li>
+<li><strong>点云特征提取</strong>：515维的输入点云通过一系列层来产生较低级别的点特征（Line 5-6）。点特征进一步通过Line 7-11进行处理。然后，我们沿着特征维度连接浅层（Line 6的输出）和深层（Line 11的输出）的点云，得到一个1024维的点云。</li>
+<li><strong>距离预测</strong>：一个回归器将每个点（1024维）映射到一个用于距离预测的单一标量（Line 12-18）。最后，我们将子采样的距离上采样到完整的手部网格（Line 19）。</li>
+<li><strong>其他实体的预测</strong>：我们以相同的方式预测左手和物体的交互场。所有实体共享相同的图像和PointNet骨干网络。</li>
+</ol>
+<h1 id="Discussions-and-Limitations"><a href="#Discussions-and-Limitations" class="headerlink" title="Discussions and Limitations"></a>Discussions and Limitations</h1><ol>
+<li><strong>已知的物体模型</strong>：与现有方法类似，我们的基线方法假设物体模型是已知的。我们认为未知物体的3D形状估计是一个正交问题，该领域正在取得进展。现在我们已经展示了为这样的物体推断手-物体交互的可行性，未来的工作应该将我们的方法与3D关节物体推断结合起来。</li>
+<li><strong>玩具物体</strong>：我们的部分物体是玩具，它们的尺寸不是真实比例，缺乏真实物体的视觉复杂性。但ARCTIC的目标是研究手与物体之间的物理动力学。</li>
+<li><strong>捕捉接触的SMPL-X</strong>：我们使用SMPLX/MANO作为人的表示，但人的几何形状在接触时并没有捕捉到皮肤的变形。虽然一个可变形的人体/手模型对于捕捉真实的接触是理想的，但开发这样的模型不是ARCTIC的目标。</li>
+<li><strong>RGB图像中的手部标记</strong>：我们使用光学标记捕捉来提供准确的手和物体姿态，这可能会引入标签噪声。但我们的手部标记非常小（半径1.5mm），在图像调整大小用于输入时几乎看不见。</li>
+<li><strong>我们的物体的自由度</strong>：我们构建的ARCTIC物体有1个自由度。这是因为为人类交互设计的许多物品通常只有一个旋转轴，因为它们容易生产且直观易操作。因此，ARCTIC中的物体代表了家庭和企业中常见的广泛物体类别。</li>
+<li><strong>人类主题数据的批准</strong>：主题数据是在获得书面、事先、知情的同意后收集的，数据收集已经过大学伦理委员会的审查。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">adventurer-w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/10/10/ARCTIC/">http://example.com/2023/10/10/ARCTIC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">魔法使いの秘密基地</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">归纳总结</a></div><div class="post_share"><div class="social-share" data-image="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/13/Ego-Body-Pose-Estimation/"><img class="prev-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CVPR2023(Award Candidate)Ego-Body Pose Estimation via Ego-Head Pose Estimation 阅读笔记</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/02/csbaoyan/"><img class="next-cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/7A97E38B-8BAB-4B24-A95D-81027AA737AE_1_105_c.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">杂谈SP YOU CAN (NOT) ADVANCED——保研经验贴</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/09/6DPose-1/" title="6D姿态估计-笔记1"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-09</div><div class="title">6D姿态估计-笔记1</div></div></a></div><div><a href="/2022/09/29/Transformer1/" title="Transformer笔记1 —— BERT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/9F442EA0-F893-45C6-8967-10A3799F6DFC.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记1 —— BERT</div></div></a></div><div><a href="/2022/09/29/Transformer2/" title="Transformer笔记2 —— VIT"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/703C5B20-1C26-4B29-B378-B5B9FD03B485_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-29</div><div class="title">Transformer笔记2 —— VIT</div></div></a></div><div><a href="/2023/02/01/SAR%20Change%20Detection/" title="SAR图像变化检测深度学习研究方法"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A3E5572F-5538-46C2-B4FD-ECC60C0B90E5_1_105_c.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-01</div><div class="title">SAR图像变化检测深度学习研究方法</div></div></a></div><div><a href="/2022/09/30/Transformer3/" title="Transformer笔记3——SwinTransformer"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/761D60E7-9EB9-4498-9053-86BF95761992_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">Transformer笔记3——SwinTransformer</div></div></a></div><div><a href="/2022/11/23/detection/" title="目标检测相关摘录"><img class="cover" src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/628FBB49-B697-4165-8B49-A59144FB233F_1_102_o.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-23</div><div class="title">目标检测相关摘录</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/72805526.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">adventurer-w</div><div class="author-info__description">励志好好学习魔法ヾ(=･ω･=)o</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/adventurer-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-bilibili-line"></i></a><a class="social-icon" href="https://space.bilibili.com/91422238" target="_blank" title="BiliBili"><i class="iconfont icon-weibo"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E3%80%81%E5%8A%A8%E6%9C%BA%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.</span> <span class="toc-text">论文研究背景、动机与主要贡献</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E5%8F%8A%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">研究背景及动机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.2.</span> <span class="toc-text">主要贡献</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ARCTIC%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E6%8E%A8%E5%87%BA%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. ARCTIC数据集的推出：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8F%90%E5%87%BA%E4%B8%A4%E4%B8%AA%E6%96%B0%E9%A2%96%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 提出两个新颖的任务：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AF%B9%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E7%9A%84%E8%AE%A8%E8%AE%BA%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 对相关工作的讨论：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E8%BF%90%E5%8A%A8%E9%87%8D%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">一致性运动重建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">评价指标：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E8%A7%A6%E5%92%8C%E7%9B%B8%E5%AF%B9%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.2.1.</span> <span class="toc-text">接触和相对位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">运动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B"><span class="toc-number">2.2.3.</span> <span class="toc-text">手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E4%BD%93"><span class="toc-number">2.2.4.</span> <span class="toc-text">物体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B-ArcticNet"><span class="toc-number">2.3.</span> <span class="toc-text">模型 ArcticNet</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E5%9C%BA%E4%BC%B0%E8%AE%A1"><span class="toc-number">3.</span> <span class="toc-text">相互作用场估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">3.1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InterField"><span class="toc-number">3.2.</span> <span class="toc-text">InterField</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Discussions-and-Limitations"><span class="toc-number">4.</span> <span class="toc-text">Discussions and Limitations</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/10/13/Ego-Body-Pose-Estimation/" title="CVPR2023(Award Candidate)Ego-Body Pose Estimation via Ego-Head Pose Estimation 阅读笔记"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVPR2023(Award Candidate)Ego-Body Pose Estimation via Ego-Head Pose Estimation 阅读笔记"/></a><div class="content"><a class="title" href="/2023/10/13/Ego-Body-Pose-Estimation/" title="CVPR2023(Award Candidate)Ego-Body Pose Estimation via Ego-Head Pose Estimation 阅读笔记">CVPR2023(Award Candidate)Ego-Body Pose Estimation via Ego-Head Pose Estimation 阅读笔记</a><time datetime="2023-10-13T04:56:11.000Z" title="发表于 2023-10-13 12:56:11">2023-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/10/ARCTIC/" title="CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记"/></a><div class="content"><a class="title" href="/2023/10/10/ARCTIC/" title="CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记">CVPR2023:ARCTIC A Dataset for Dexterous Bimanual Hand-Object Manipulation 阅读笔记</a><time datetime="2023-10-10T04:56:11.000Z" title="发表于 2023-10-10 12:56:11">2023-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/02/csbaoyan/" title="杂谈SP YOU CAN (NOT) ADVANCED——保研经验贴"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/7A97E38B-8BAB-4B24-A95D-81027AA737AE_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="杂谈SP YOU CAN (NOT) ADVANCED——保研经验贴"/></a><div class="content"><a class="title" href="/2023/10/02/csbaoyan/" title="杂谈SP YOU CAN (NOT) ADVANCED——保研经验贴">杂谈SP YOU CAN (NOT) ADVANCED——保研经验贴</a><time datetime="2023-10-02T06:57:54.000Z" title="发表于 2023-10-02 14:57:54">2023-10-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/13/SRCL/" title="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/A9CD8212-2784-45D6-9D4E-D39E860755A9_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation"/></a><div class="content"><a class="title" href="/2023/07/13/SRCL/" title="ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation">ACL2023:Vision Language Pre-training by Contrastive Learning with Cross-Modal Similarity Regulation</a><time datetime="2023-07-13T04:56:11.000Z" title="发表于 2023-07-13 12:56:11">2023-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/27/QD-DETR.md/" title="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection"><img src="https://tuchuang-1308516817.cos.ap-nanjing.myqcloud.com/img/412C1CBF-59A3-49FE-88AC-6157AA95C616_1_105_c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection"/></a><div class="content"><a class="title" href="/2023/05/27/QD-DETR.md/" title="CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection">CVPR 2023:Query-Dependent Video Representation for Moment Retrieval and Highlight Detection</a><time datetime="2023-05-27T14:56:12.000Z" title="发表于 2023-05-27 22:56:12">2023-05-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By adventurer-w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'WmXbg5ij5vMxwX438aE8YqmW-gzGzoHsz',
+      appKey: '1csr0uQv2Nu1k8EmKultS9gQ',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
